@@ -5,15 +5,15 @@
             
             <span>
                 <!-- <a href="#" data-target="slide-out" class="sidenav-trigger black-text">click</a> -->
-                <a href="#" data-target="slide-out" class="sidenav-trigger black-text btn show-on-large"><Menu :size="30" class="icon"/></a>
+                <a href="#" data-target="slide-out" class="sidenav-trigger black-text show-on-large transparent"><Menu :size="30" class="icon"/></a>
                 <router-link to="/" class="brand-logo cyan-text text-accent-4">BusTap</router-link>
             </span>
         
-            <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <!-- <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li><a href="sass.html" class="black-text">Sass</a></li>
                 <li><a href="badges.html"  class="black-text">Components</a></li>
                 <li><a href="collapsible.html"  class="black-text">JavaScript</a></li>
-            </ul>
+            </ul> -->
             </div>
         </nav>
         <SideNav/>

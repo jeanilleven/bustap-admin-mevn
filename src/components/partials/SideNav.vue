@@ -9,40 +9,40 @@
             <a href="#email"><span class="email">jdandturk@gmail.com</span></a>
             </div></li>
             <li>    
-                <a href="/" class="withIcon">
+                <router-link to="/" class="withIcon">
                     <span class="icon"><ViewDashboard :size="19"/></span> 
                     <span class="padd">Dashboard</span> 
-                </a>
+                </router-link>
             </li>
             <li>    
-                <a href="/" class="withIcon">
+                <router-link to="/statistics" class="withIcon">
                     <span class="icon"><Poll :size="19"/></span> 
                     <span class="padd">Statistics</span> 
-                </a>
+                </router-link>
             </li>
             <li>    
-                <a href="/" class="withIcon">
+                <router-link to="/operators" class="withIcon">
                     <span class="icon"><AccountGroupOutline :size="19"/></span> 
                     <span class="padd">Operators</span> 
-                </a>
+                </router-link>
             </li>
             <li>    
-                <a href="/" class="withIcon">
+                <router-link to="/employees" class="withIcon">
                     <span class="icon"><AccountOutline :size="19"/></span> 
                     <span class="padd">Employees</span> 
-                </a>
+                </router-link>
             </li>
             <li>    
-                <a href="/" class="withIcon">
+                <router-link to="/vehicles" class="withIcon">
                     <span class="icon"><Bus :size="19"/></span> 
                     <span class="padd">Vehicles</span> 
-                </a>
+                </router-link>
             </li>
             <li>    
-                <a href="/" class="withIcon">
+                <router-link to="/terminals" class="withIcon">
                     <span class="icon"><MapMarker :size="19"/></span> 
                     <span class="padd">Terminals</span> 
-                </a>
+                </router-link>
             </li>
             <!-- <li><div class="divider"></div></li>
             <li><a class="subheader">Subheader</a></li>
