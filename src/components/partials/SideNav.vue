@@ -8,7 +8,7 @@
         <a href="#name"><span class="white-text name">John Doe</span></a>
         <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a>
         </div></li>
-        <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
+        <li><a href="#!"><MenuIcon /> First Link With Icon</a></li>
         <li><a href="#!">Second Link</a></li>
         <li><div class="divider"></div></li>
         <li><a class="subheader">Subheader</a></li>
@@ -19,3 +19,16 @@
     </div>
     
 </template>
+
+<script>
+import MenuIcon from 'vue-material-design-icons/.vue';
+ 
+// Vue.component('menu-icon', MenuIcon);
+
+export default {
+  name: 'sidenav',
+  components: {
+      MenuIcon
+  }
+}
+</script>

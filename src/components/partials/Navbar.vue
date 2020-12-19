@@ -16,8 +16,8 @@
             </ul>
             </div>
         </nav>
-
-        <ul id="slide-out" class="sidenav">
+        <SideNav/>
+        <!-- <ul id="slide-out" class="sidenav">
             <li>
                 <div class="user-view">
                     <div class="background">
@@ -32,9 +32,20 @@
             <li><div class="divider"></div></li>
             <li><a class="subheader">Subheader</a></li>
             <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
-        </ul>
+        </ul> -->
 
     <!-- <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a> -->
     </div>
     
 </template>
+
+<script>
+import SideNav from '@/components/partials/SideNav'
+export default {
+  name: 'App',
+  components: {
+    // Navbar,
+    SideNav
+  }
+}
+</script>
