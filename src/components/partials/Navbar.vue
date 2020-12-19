@@ -1,11 +1,11 @@
 <template>
-    <div id = navbar>
+    <div id = "navbar">
         <nav class="white z-depth-0">
             <div class="nav-wrapper container ">
             
             <span>
                 <!-- <a href="#" data-target="slide-out" class="sidenav-trigger black-text">click</a> -->
-                <a href="#" data-target="slide-out" class="sidenav-trigger black-text btn show-on-large"><i class="material-icons">menu</i></a>
+                <a href="#" data-target="slide-out" class="sidenav-trigger black-text btn show-on-large"><Menu :size="30" class="icon"/></a>
                 <router-link to="/" class="brand-logo cyan-text text-accent-4">BusTap</router-link>
             </span>
         
@@ -21,13 +21,21 @@
     
 </template>
 
+<style lang="scss">
+.navbar {
+
+}
+</style>
+
 <script>
 import SideNav from '@/components/partials/SideNav'
+import Menu from 'vue-material-design-icons/Menu.vue';
 export default {
   name: 'navbar',
   components: {
     // Navbar,
-    SideNav
+    SideNav,
+    Menu
   }
 }
 </script>
