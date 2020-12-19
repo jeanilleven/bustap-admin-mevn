@@ -3,7 +3,7 @@
         <ul id="slide-out" class="sidenav">
         <li><div class="user-view">
         <div class="background">
-            <img src="images/office.jpg">
+            <img src="assets/office.jpg">
         </div>
         <a href="#name"><span class="white-text name">John Doe</span></a>
         <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a>
