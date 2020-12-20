@@ -96,7 +96,7 @@
       </div>
 
       <!-- <VehicleModal v-bind:id="'1'"/> -->
-      <VehicleModal v-for="operator in busOperators" :key="operator.uid" :id="operator.uid" :operator="operator"/>
+      <VehicleModal class="v-modal" v-for="operator in busOperators" :key="operator.uid" :id="operator.uid" :operator="operator"/>
       <VehicleModal v-for="operator in jeepOperators" :key="operator.uid" :id="operator.uid" :operator="operator"/>
 
       <!-- <div v-for="element in operators" v-bind:key="element.uid">
@@ -151,6 +151,11 @@ export default {
                 this.jeepOperators.push(data)
             })
         })
+    },
+    mounted() {
+        const MyComponentConstructor = Vue.extend(MyComponent);
+        const vm = new MyComponentConstructor();
+        vm.$mount('#some-place');
     }
 }
 </script>
