@@ -1,0 +1,17 @@
+-------------------- Auto-Git Log --------------------
+		Sat Dec 19 2020 22:19:43 GMT+0800 (Singapore Standard Time)
+------------------------------------------------------
+
+Modified files:
+* package-lock.json
+* src/components/partials/SideNav.vue
+
+
+Created files:
+* .autogit/autogit.json
+
+
+Deleted files:
+
+
+Renamed files:
