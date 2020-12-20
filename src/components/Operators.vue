@@ -96,8 +96,8 @@
       </div>
 
       <!-- <VehicleModal v-bind:id="'1'"/> -->
-      <VehicleModal v-for="operator in busOperators" :key="operator.uid" :id="operator.uid" :operator="operator"/>
-      <VehicleModal v-for="operator in jeepOperators" :key="operator.uid" :id="operator.uid" :operator="operator"/>
+      <VehicleModal v-for="operator in busOperators" :key="operator.uid" :id="operator.uid" :operator="operator" ref="busRef"/>
+      <VehicleModal v-for="operator in jeepOperators" :key="operator.uid" :id="operator.uid" :operator="operator" ref="jeepRef"/>
 
       <!-- <div v-for="element in operators" v-bind:key="element.uid">
           <VehicleModal v-bind:operator="element" v-bind:id="element.uid"/>
@@ -151,6 +151,12 @@ export default {
                 this.jeepOperators.push(data)
             })
         })
+    },
+    mounted(){
+        // document.querySelector('.modal').modal()
+        // document.querySelector('.modal').modal()
+        this.$refs.busRef
+        console.log(this.$refs.VehicleModal)
     }
 }
 </script>

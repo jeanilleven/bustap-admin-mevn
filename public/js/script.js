@@ -1,7 +1,7 @@
 $(document).ready(function(){
     // materialize javascript components init
     $('.sidenav').sidenav();
-    $('.modal').modal();
+    // $('.modal').modal();
     $('.tabs').tabs();
 
 
