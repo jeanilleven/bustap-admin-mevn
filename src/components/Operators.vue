@@ -112,6 +112,7 @@ import Eye from 'vue-material-design-icons/Eye.vue';
 import DeleteOutline from 'vue-material-design-icons/DeleteOutline.vue';
 import VehicleModal from '@/components/partials/VehicleModal'
 import db from './firebase/firebaseInit'
+import AppVue from '../App.vue';
 export default {
     name: 'operators',
     components: {
@@ -153,9 +154,9 @@ export default {
         })
     },
     mounted() {
-        const MyComponentConstructor = Vue.extend(MyComponent);
+        const MyComponentConstructor = Vue.extend(VehicleModal);
         const vm = new MyComponentConstructor();
-        vm.$mount('#some-place');
+        vm.$mount('.v-modal');
     }
 }
 </script>
