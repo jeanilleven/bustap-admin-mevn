@@ -1,9 +1,9 @@
 $(document).ready(function(){
     // materialize javascript components init
-    $('.sidenav').sidenav();
+    // $('.sidenav').sidenav();
     // $('.modal').modal();
-    $('.tabs').tabs();
-
-
-    console.log('wtf')
+    // $('.tabs').tabs();
+    // M.AutoInit();
+    // console.log($('.modal'))
+    // console.log('wtf')
 });
