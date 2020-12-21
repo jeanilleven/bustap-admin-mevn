@@ -2,31 +2,31 @@
     <div class="modal">
         <div class="modal-content">
             <table>
-                        
-            <h4>{{vehicle.bus_code}} Schedules</h4>
-            <div class="row">
-                <table>
-                    <thead>
-                        <th>ID</th>
-                        <th>Terminal</th>
-                        <th>Time</th>
-                        <th>Actions</th>
-                    </thead>
-                    <tr v-for="schedule in schedules" v-bind:key="schedule.uid">
-                        <td>{{schedule.uid}}</td>
-                        <th><input type="text" :value="schedule.terminal_code" disabled></th>
-                        <td>{{schedule.datetime}}</td>
-                        <td>
-                            <a v-bind:href="'#operator-'+ schedule.uid" class="icon modal-trigger">
-                                <span class="icon"><Eye :size="19"/></span> 
-                            </a>
-                            <a v-bind:href="'#delete-schedule-'+ schedule.uid" class="icon modal-trigger">
-                                <span class="icon"><DeleteOutline :size="19"/></span> 
-                            </a>
-                        </td>
-                    </tr> 
-                </table>
-            </div>
+
+            <div v-if="mode == 'table'">
+                <h4>{{vehicle.bus_code}} Schedules</h4>
+                <div class="row">
+                    <table>
+                        <thead>
+                            <th>Terminal</th>
+                            <th>Time</th>
+                            <th>Actions</th>
+                        </thead>
+                        <tr v-for="schedule in schedules" v-bind:key="schedule.uid">
+                            <th>{{schedule.terminal_code}}</th>
+                            <td>{{schedule.datetime}}</td>
+                            <td>
+                                <a v-bind:href="'#operator-'+ schedule.uid" class="icon modal-trigger">
+                                    <span class="icon"><Eye :size="19"/></span> 
+                                </a>
+                                <a v-bind:href="'#delete-schedule-'+ schedule.uid" class="icon modal-trigger">
+                                    <span class="icon"><DeleteOutline :size="19"/></span> 
+                                </a>
+                            </td>
+                        </tr> 
+                    </table>
+                </div>
+            </div>        
         </table>
         <DeleteScheduleModal v-for="schedule in schedules" :key="'delete-schedule-'+schedule.uid" :id="'delete-schedule-'+ schedule.uid" :schedule="schedule"/>
         </div>
@@ -51,6 +51,11 @@ import db from '../firebase/firebaseInit'
 import M from 'materialize-css'
 // import { Router } from 'express';
 
+var uid = '';
+
+function checkTerminalId(terminal) {
+  return terminal.uid === uid;
+}
 export default {
     props: ['vehicle'],
     components: {
@@ -61,37 +66,59 @@ export default {
     },
     data(){
         return{
-            schedules: []
+            mode: 'table',
+            currentSched: '',
+            schedules: [],
+            terminals: []
         }
     },
     methods: {
+        moveToTable: function(){
+           this.mode = 'table';
+        },
+        moveToEdit: function(){
+           this.mode = 'edit';
+        },
+        moveToAdd: function(){
+           this.mode = 'add';
+        },
+        moveToDelete: function(){
+           this.mode = 'delete';
+        }
     },
-    created(){
-        console.log(this.vehicle.docRef.path);
-        db.collection('busSchedules').get().then(querSnapshot => {
-        // db.collection('schedules').where('vehicle_id', '==', this.vehicle.docRef.path).get().then(querSnapshot => {
+    created(){            
+        db.collection('terminals').get().then(querSnapshot => {
             querSnapshot.forEach(doc => {
-                if(doc.exists && doc.data().vehicle_id.path == this.vehicle.docRef.path && doc.data().deleted == false){
-                console.log(doc.data().vehicle_id.path + '=='+ this.vehicle.docRef.path )
-                const data = {
-                    'uid': doc.id,
-                    // 'terminal_code': doc.data().terminal_id.get().then(docSnapshot => docSnapshot.data().station_number),
-                    'terminal_code': doc.data().terminal_code,
-                    'datetime': doc.data().datetime.toDate()
-                }
-                // doc.data().terminal_id.get().then(docSnapshot=>{
-                // //         var hello = docSnapshot.data();
-                //         console.log(docSnapshot.data()['station_number']);
-                //         this.schedules.find((data)=>{return doc.id == data.id}).terminal_code = docSnapshot.data()['station_number'];
-                //     })
-                this.schedules.push(data)
+                if(doc.exists && doc.data().deleted == false){
+                    const data = {
+                        'uid': doc.id,
+                        'station_number': doc.data().station_number,
+                    }
+                    this.terminals.push(data)
                 }
             })
+            db.collection('busSchedules').get().then(querSnapshot => {
+                querSnapshot.forEach(doc => {
+                    if(doc.exists && doc.data().vehicle_id.path == this.vehicle.docRef.path && doc.data().deleted == false){
+                        uid = doc.data().terminal_id.path.replace('terminals/','');
+                        console.log(uid);
+                        const data = {
+                            'uid': doc.id,
+                            // 'terminal_code': doc.data().terminal_code,
+                            'terminal_code': this.terminals.find(checkTerminalId),
+                            'datetime': doc.data().datetime.toDate()
+                        }
+                        this.schedules.push(data)
+                    }
+                })
+                if(querSnapshot.empty){
+                    console.log('no document found');
+                }
+            })   
             if(querSnapshot.empty){
                 console.log('no document found');
             }
         })
-
         M.updateTextFields()
     }
 }
