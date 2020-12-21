@@ -70,10 +70,14 @@ export default {
             var busCode = document.getElementById('bus_code-'+this.vehicle.uid).value;
             var plateNumber = document.getElementById('plate_number-'+this.vehicle.uid).value;
             var type = document.getElementById('type-'+this.vehicle.uid).value;
+            var capacity = document.getElementById('capacity-'+this.vehicle.uid).value;
+            var manufacturer = document.getElementById('manufacturer-'+this.vehicle.uid).value;
             db.collection('buses').doc(this.vehicle.uid).update({
                 'bus_code': busCode,
                 'plate_number': plateNumber,
-                'type': type
+                'type': type,
+                'capacity': capacity,
+                'manufacturer': manufacturer
             }).then(()=>{
                     console.log(busCode, plateNumber, type);
                    location.reload();

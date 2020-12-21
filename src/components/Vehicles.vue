@@ -37,7 +37,7 @@
             </tbody>
         </table>
         <ViewVehicleModal v-for="vehicle in vehicles" :key="'vehicle'+vehicle.uid" :id="'vehicle-'+ vehicle.uid" :vehicle="vehicle" :type="'Bus'"/>
-        <AddVehicleModal :key="add-vehicle" :id="add-vehicle"/>
+        <AddVehicleModal key="add-vehicle" id="add-vehicle"/>
         <ViewVehicleSchedulesModal v-for="vehicle in vehicles" :key="'schedules'+vehicle.uid" :id="'schedules-'+ vehicle.uid" :vehicle="vehicle" :type="'Bus'"/>
     </div>
     
@@ -80,7 +80,6 @@ export default {
         Calendar
         // "modal": require("vue-materialize/modal")
     },
-    bus_code: 'vehicles',
     data(){
         return {
             vehicles: []

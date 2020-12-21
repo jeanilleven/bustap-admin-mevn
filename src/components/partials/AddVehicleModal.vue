@@ -3,7 +3,7 @@
         <div class="modal-content">
             <table>
                         
-            <h4>{{vehicle.type}} Details</h4>
+            <h4>Add Vehicle</h4>
             <div class="row">
                 <form class="col s12" @submit.prevent>
                     <div class="row">
@@ -32,7 +32,7 @@
                     <div class="row">
                         <div class="input-field col s12">
                             <label for="type">Capacity</label>
-                            <input id='add-capacity' type="text" class="validate" :value="vehicle.capacity">
+                            <input id='add-capacity' type="text" class="validate">
                         </div>
                     </div>
                     <div class="row">
@@ -67,7 +67,7 @@ export default {
             var busCode = document.getElementById('bus_code-'+this.vehicle.uid).value;
             var plateNumber = document.getElementById('plate_number-'+this.vehicle.uid).value;
             var type = document.getElementById('type-'+this.vehicle.uid).value;
-            db.collection('buses').doc(this.vehicle.uid).update({
+            db.collection('buses').doc(this.vehicle.uid).add({
                 'bus_code': busCode,
                 'plate_number': plateNumber,
                 'type': type
