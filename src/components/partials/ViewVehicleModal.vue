@@ -1,8 +1,7 @@
 <template>
     <div id="vehicle-modal" class="modal">
         <div class="modal-content">
-            <!-- <h4>{{operator.name}}</h4> -->
-            <h4>:))</h4>
+            <h4>{{operator.name}}</h4>
             <p>A bunch of text</p>
         </div>
         <div class="modal-footer">
