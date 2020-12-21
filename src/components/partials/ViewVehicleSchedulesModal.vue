@@ -67,16 +67,20 @@ export default {
         db.collection('busSchedules').get().then(querSnapshot => {
         // db.collection('schedules').where('vehicle_id', '==', this.vehicle.docRef.path).get().then(querSnapshot => {
             querSnapshot.forEach(doc => {
+                if(doc.exists){
                 const data = {
                     'uid': doc.id,
-                    'terminal_code': doc.data().terminal_id.get().then(docSnapshot => docSnapshot.data().station_number),
+                    // 'terminal_code': doc.data().terminal_id.get().then(docSnapshot => docSnapshot.data().station_number),
                     'terminal_code': doc.data().terminal_code,
-                    'datetime':  doc.data().datetime
+                    'datetime': doc.data().datetime.toDate()
                 }
                 doc.data().terminal_id.get().then(docSnapshot=>{
-                        docSnapshot.data().station_number
+                //         var hello = docSnapshot.data();
+                        console.log(docSnapshot.data()['station_number']);
+                        this.schedules.find(data, (elem)=>{elem.terminal_code = docSnapshot.data()['station_number']})
                     })
                 this.schedules.push(data)
+                }
             })
             if(querSnapshot.empty){
                 console.log('no document found');
