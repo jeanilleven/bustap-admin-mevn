@@ -18,12 +18,22 @@
                     <th>{{vehicle.bus_code}}</th>
                     <td>{{vehicle.plate_number}}</td>
                     <td>{{vehicle.type}}</td>
-                    <td>view-icon</td>
-                    <td>bin-icon</td>
+                    <td>
+                        <a v-bind:href="'#vehicle-'+ vehicle.uid" class="icon modal-trigger">
+                            <span class="icon"><Eye :size="19"/></span> 
+                        </a>
+                    </td>
+                    <td>
+                        <a href="#" class="icon">
+                            <span class="icon"><DeleteOutline :size="19"/></span> 
+                        </a>
+                    </td>
                 </tr> 
             </tbody>
-      </table>
+        </table>
+        <ViewVehicleModal v-for="vehicle in vehicles" :key="vehicle.uid" :id="'vehicle-'+ vehicle.uid" :vehicle="vehicle" :type="'Bus'"/>
     </div>
+    
 </template>
 <style lang="scss">
 #vehiclesTable {
@@ -41,16 +51,19 @@
 </style>
 <script>
 
-import TrashCanOutline from 'vue-material-design-icons/TrashCanOutline.vue';
-import EyeOutline from 'vue-material-design-icons/EyeOutline.vue';
+import DeleteOutline from 'vue-material-design-icons/DeleteOutline.vue';
+import Eye from 'vue-material-design-icons/Eye.vue';
+import ViewVehicleModal from '@/components/partials/ViewVehicleModal.vue';
 
+import M from 'materialize-css'
 import db from './firebase/firebaseInit'
 export default {
     name: 'vehiclesTable',
     components: {
-        EyeOutline,
-        TrashCanOutline,
-        "modal": require("vue-materialize/modal")
+        Eye,
+        DeleteOutline,
+        ViewVehicleModal
+        // "modal": require("vue-materialize/modal")
     },
     bus_code: 'vehicles',
     data(){
@@ -71,6 +84,10 @@ export default {
             })
         })
     },
+    updated(){
+        // waits the modals to be rendered before initializing the component
+        this.$nextTick(() => M.AutoInit())
+    }
     
 }
 </script>
