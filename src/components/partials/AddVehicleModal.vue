@@ -37,7 +37,7 @@
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            <button class="btn white-text green" v-on:click="update">Sumbit Edits</button>
+                            <button class="btn white-text green" v-on:click="add">Add Vehicle</button>
                         </div>
                     </div>
                 </form>
@@ -63,14 +63,20 @@ import M from 'materialize-css'
 
 export default {
     methods: {
-        update: function(){
-            var busCode = document.getElementById('bus_code-'+this.vehicle.uid).value;
-            var plateNumber = document.getElementById('plate_number-'+this.vehicle.uid).value;
-            var type = document.getElementById('type-'+this.vehicle.uid).value;
-            db.collection('buses').doc(this.vehicle.uid).add({
+        add: function(){
+            var busCode = document.getElementById('add-bus_code').value;
+            var plateNumber = document.getElementById('add-plate_number').value;
+            var type = document.getElementById('add-type').value;
+            var capacity = document.getElementById('add-capacity').value;
+            var manufacturer = document.getElementById('add-manufacturer').value;
+            db.collection('buses').add({
                 'bus_code': busCode,
                 'plate_number': plateNumber,
-                'type': type
+                'type': type,
+                'capacity': capacity,
+                'manufacturer': manufacturer,
+                'deleted':false,
+                'seat_capacity': 0
             }).then(()=>{
                     console.log(busCode, plateNumber, type);
                    location.reload();

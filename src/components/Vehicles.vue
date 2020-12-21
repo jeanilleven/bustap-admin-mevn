@@ -86,7 +86,7 @@ export default {
         };
     },
     created(){
-        db.collection('buses').get().then(querSnapshot => {
+        db.collection('buses').orderBy('bus_code').get().then(querSnapshot => {
             querSnapshot.forEach(doc => {
                 const data = {
                     'uid': doc.id,
