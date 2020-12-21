@@ -2,7 +2,14 @@
     <div class="modal">
         <div class="modal-content">
             <table>
-
+                <select name="" id="">
+                    <option value="h">hrello</option>
+                    <option value="h">hrello</option>
+                    <option value="h">hrello</option>
+                    <option value="h">hrello</option>
+                    <option value="h">hrello</option>
+                    <option value="h">hrello</option>
+                </select>
             <div v-if="mode == 'table'">
                 <h4>{{vehicle.bus_code}} Schedules</h4>
                 <div class="row">
@@ -13,10 +20,20 @@
                             <th>Actions</th>
                         </thead>
                         <tr v-for="schedule in schedules" v-bind:key="schedule.uid">
-                            <th>{{schedule.terminal_code}}</th>
+                            <td>
+                                <!-- {{schedule.terminal_code}} -->
+                                <form action="">
+                                    <select name="terminal-options" id="select">
+                                        <option v-for="terminal in terminals" v-bind:key="'options-'+terminal.uid" :value="terminal.uid">{{terminal.station_number}}</option>
+                                    </select>   
+
+                                </form>
+
+
+                            </td>
                             <td>{{schedule.datetime}}</td>
                             <td>
-                                <a v-bind:href="'#operator-'+ schedule.uid" class="icon modal-trigger">
+                                <a v-bind:href="'#view-'+ schedule.uid" class="icon modal-trigger">
                                     <span class="icon"><Eye :size="19"/></span> 
                                 </a>
                                 <a v-bind:href="'#delete-schedule-'+ schedule.uid" class="icon modal-trigger">
@@ -54,6 +71,9 @@ import M from 'materialize-css'
 var uid = '';
 
 function checkTerminalId(terminal) {
+    // if(terminal.uid === uid){
+    //     console.log(terminal.uid +' === ' + uid);
+    // }
   return terminal.uid === uid;
 }
 export default {
@@ -89,7 +109,7 @@ export default {
     created(){            
         db.collection('terminals').get().then(querSnapshot => {
             querSnapshot.forEach(doc => {
-                if(doc.exists && doc.data().deleted == false){
+                if(doc.exists){
                     const data = {
                         'uid': doc.id,
                         'station_number': doc.data().station_number,
@@ -101,11 +121,11 @@ export default {
                 querSnapshot.forEach(doc => {
                     if(doc.exists && doc.data().vehicle_id.path == this.vehicle.docRef.path && doc.data().deleted == false){
                         uid = doc.data().terminal_id.path.replace('terminals/','');
-                        console.log(uid);
+                        // console.log(uid);
                         const data = {
                             'uid': doc.id,
                             // 'terminal_code': doc.data().terminal_code,
-                            'terminal_code': this.terminals.find(checkTerminalId),
+                            'terminal_code': (this.terminals.find(checkTerminalId) != null)?this.terminals.find(checkTerminalId).station_number:'not_found',
                             'datetime': doc.data().datetime.toDate()
                         }
                         this.schedules.push(data)
