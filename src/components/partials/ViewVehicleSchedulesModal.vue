@@ -13,26 +13,26 @@
                         <th>Actions</th>
                     </thead>
                     <tr v-for="schedule in schedules" v-bind:key="schedule.uid">
-                            <td>{{schedule.uid}}</td>
-                            <th>{{schedule.terminal_code}}</th>
-                            <td>{{schedule.datetime}}</td>
-                            <td>
-                                <a v-bind:href="'#operator-'+ schedule.uid" class="icon modal-trigger">
-                                    <span class="icon"><Eye :size="19"/></span> 
-                                </a>
-                                <a v-bind:href="'#delete-schedule-'+ schedule.uid" class="icon modal-trigger">
-                                    <span class="icon"><DeleteOutline :size="19"/></span> 
-                                </a>
-                            </td>
-                        </tr> 
+                        <td>{{schedule.uid}}</td>
+                        <th><input type="text" :value="schedule.terminal_code" disabled></th>
+                        <td>{{schedule.datetime}}</td>
+                        <td>
+                            <a v-bind:href="'#operator-'+ schedule.uid" class="icon modal-trigger">
+                                <span class="icon"><Eye :size="19"/></span> 
+                            </a>
+                            <a v-bind:href="'#delete-schedule-'+ schedule.uid" class="icon modal-trigger">
+                                <span class="icon"><DeleteOutline :size="19"/></span> 
+                            </a>
+                        </td>
+                    </tr> 
                 </table>
             </div>
         </table>
+        <DeleteScheduleModal v-for="schedule in schedules" :key="'delete-schedule-'+schedule.uid" :id="'delete-schedule-'+ schedule.uid" :schedule="schedule"/>
         </div>
         <div class="modal-footer">
             <a href="#!" class="modal-close waves-effect waves-green btn-flat">close</a>
         </div>
-        <DeleteScheduleModal v-for="schedule in schedules" :key="'delete-schedule-'+schedule.uid" :id="'delete-schedule'+ schedule.uid" :schedule="schedule"/>
     </div>
 </template>
 <style lang="scss">

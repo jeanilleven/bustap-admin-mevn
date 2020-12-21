@@ -1,0 +1,20 @@
+-------------------- Auto-Git Log --------------------
+		Mon Dec 21 2020 20:56:33 GMT+0800 (Singapore Standard Time)
+------------------------------------------------------
+
+Modified files:
+* src/components/Vehicles.vue
+* src/components/partials/ViewVehicleSchedulesModal.vue
+
+
+Created files:
+* .autogit/logs/log-21-11-2020-20-26-13.txt
+* src/components/partials/DeleteScheduleModal.vue
+* src/components/partials/DeleteVehicleModal.vue
+
+
+Deleted files:
+* src/components/partials/DeleteVehicle.vue
+
+
+Renamed files:
