@@ -17,11 +17,10 @@
                             <th>{{schedule.terminal_code}}</th>
                             <td>{{schedule.datetime}}</td>
                             <td>
-                            <td>
                                 <a v-bind:href="'#operator-'+ schedule.uid" class="icon modal-trigger">
                                     <span class="icon"><Eye :size="19"/></span> 
                                 </a>
-                                <a href="#" class="icon">
+                                <a v-bind:href="'#delete-schedule-'+ schedule.uid" class="icon modal-trigger">
                                     <span class="icon"><DeleteOutline :size="19"/></span> 
                                 </a>
                             </td>
@@ -33,6 +32,7 @@
         <div class="modal-footer">
             <a href="#!" class="modal-close waves-effect waves-green btn-flat">close</a>
         </div>
+        <DeleteScheduleModal v-for="schedule in schedules" :key="'delete-schedule-'+schedule.uid" :id="'delete-schedule'+ schedule.uid" :schedule="schedule"/>
     </div>
 </template>
 <style lang="scss">
@@ -44,8 +44,10 @@
 <script>
 import DeleteOutline from 'vue-material-design-icons/DeleteOutline.vue';
 import Eye from 'vue-material-design-icons/Eye.vue';
-import db from '../firebase/firebaseInit'
 
+import DeleteScheduleModal from '@/components/partials/DeleteScheduleModal.vue';
+
+import db from '../firebase/firebaseInit'
 import M from 'materialize-css'
 // import { Router } from 'express';
 
@@ -53,7 +55,9 @@ export default {
     props: ['vehicle'],
     components: {
         Eye,
-        DeleteOutline
+        DeleteOutline,
+        
+        DeleteScheduleModal,
     },
     data(){
         return{
@@ -67,7 +71,8 @@ export default {
         db.collection('busSchedules').get().then(querSnapshot => {
         // db.collection('schedules').where('vehicle_id', '==', this.vehicle.docRef.path).get().then(querSnapshot => {
             querSnapshot.forEach(doc => {
-                if(doc.exists){
+                if(doc.exists && doc.data().vehicle_id.path == this.vehicle.docRef.path && doc.data().deleted == false){
+                console.log(doc.data().vehicle_id.path + '=='+ this.vehicle.docRef.path )
                 const data = {
                     'uid': doc.id,
                     // 'terminal_code': doc.data().terminal_id.get().then(docSnapshot => docSnapshot.data().station_number),

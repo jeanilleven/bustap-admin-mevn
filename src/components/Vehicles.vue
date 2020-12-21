@@ -29,16 +29,17 @@
                         <a v-bind:href="'#schedules-'+ vehicle.uid" class="icon modal-trigger">
                             <span class="icon"><Calendar :size="19"/></span> 
                         </a>
-                        <a href="#" class="icon">
+                        <a v-bind:href="'#delete-'+ vehicle.uid" class="icon modal-trigger">
                             <span class="icon"><DeleteOutline :size="19"/></span> 
                         </a>
                     </td>
                 </tr> 
             </tbody>
         </table>
-        <ViewVehicleModal v-for="vehicle in vehicles" :key="'vehicle'+vehicle.uid" :id="'vehicle-'+ vehicle.uid" :vehicle="vehicle" :type="'Bus'"/>
+        <ViewVehicleModal v-for="vehicle in vehicles" :key="'vehicle-'+vehicle.uid" :id="'vehicle-'+ vehicle.uid" :vehicle="vehicle" :type="'Bus'"/>
         <AddVehicleModal key="add-vehicle" id="add-vehicle"/>
-        <ViewVehicleSchedulesModal v-for="vehicle in vehicles" :key="'schedules'+vehicle.uid" :id="'schedules-'+ vehicle.uid" :vehicle="vehicle" :type="'Bus'"/>
+        <ViewVehicleSchedulesModal v-for="vehicle in vehicles" :key="'schedules-'+vehicle.uid" :id="'schedules-'+ vehicle.uid" :vehicle="vehicle" :type="'Bus'"/>
+        <DeleteVehicleModal v-for="vehicle in vehicles" :key="'delete-'+vehicle.uid" :id="'delete-'+ vehicle.uid" :vehicle="vehicle"/>
     </div>
     
 </template>
@@ -57,27 +58,36 @@
 }
 </style>
 <script>
-
+//icons
 import DeleteOutline from 'vue-material-design-icons/DeleteOutline.vue';
 import Eye from 'vue-material-design-icons/Eye.vue';
 import Plus from 'vue-material-design-icons/Plus.vue';
 import Calendar from 'vue-material-design-icons/Calendar.vue';
+
+//modals
 import ViewVehicleModal from '@/components/partials/ViewVehicleModal.vue';
 import AddVehicleModal from '@/components/partials/AddVehicleModal.vue';
 import ViewVehicleSchedulesModal from '@/components/partials/ViewVehicleSchedulesModal.vue';
+import DeleteVehicleModal from '@/components/partials/DeleteVehicleModal.vue';
+
+//tools
 import M from 'materialize-css';
 
 import db from './firebase/firebaseInit'
 export default {
     name: 'vehiclesTable',
     components: {
+        //icons
         Eye,
         Plus,
         DeleteOutline,
+        Calendar,
+
+        //modals
         ViewVehicleModal,
         ViewVehicleSchedulesModal,
+        DeleteVehicleModal,
         AddVehicleModal,
-        Calendar
         // "modal": require("vue-materialize/modal")
     },
     data(){
