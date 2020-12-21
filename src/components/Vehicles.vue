@@ -77,10 +77,14 @@ export default {
                 const data = {
                     'uid': doc.id,
                     'bus_code': doc.data().bus_code,
+                    'capacity': doc.data().capacity,
+                    'manufacturer': doc.data().manufacturer,
+                    'plate_number': doc.data().plate_number,
                     'type': doc.data().type,
-                    'plate_number': doc.data().plate_number
                 }
-                this.vehicles.push(data)
+                if(doc.data().deleted == false){
+                    this.vehicles.push(data);
+                }
             })
         })
     },

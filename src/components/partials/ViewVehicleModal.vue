@@ -18,8 +18,22 @@
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            <label for="type">Vehicle Type</label>
-                            <input :id="'type-'+ vehicle.uid" type="text" class="validate" :value="vehicle.type">
+                            <label for="type">Manufacturer</label>
+                            <input :id="'manufacturer-'+ vehicle.uid" type="text" class="validate" :value="vehicle.manufacturer">
+                        </div>
+                        <div class="input-field col s12">
+                            <p class="customLabel" >Vehicle Type</p>
+                            <select name="type" :id="'type-'+ vehicle.uid" >
+                                <option :value="vehicle.type">{{vehicle.type}}</option>
+                                <option v-if="vehicle.type == 'Bus'" value="Jeepney">Jeepney</option>
+                                <option v-if="vehicle.type == 'Jeepney'" value="Bus">Bus</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <label for="type">Capacity</label>
+                            <input :id="'capacity-'+ vehicle.uid" type="text" class="validate" :value="vehicle.capacity">
                         </div>
                     </div>
                     <div class="row">
@@ -37,7 +51,12 @@
         </div>
     </div>
 </template>
+<style lang="scss">
+.customLabel {
+    color: rgb(180, 180, 180);
 
+}
+</style>
 <script>
 import db from '../firebase/firebaseInit'
 
