@@ -3,7 +3,7 @@
         <div class="modal-content">
             <table>
                         
-            <h4>{{vehicle.type}} Details</h4>
+            <h4>{{vehicle.bus_code}} Schedules</h4>
             <div class="row">
                 <form class="col s12" @submit.prevent>
                     <div class="row">

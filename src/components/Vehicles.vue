@@ -54,6 +54,7 @@
 import DeleteOutline from 'vue-material-design-icons/DeleteOutline.vue';
 import Eye from 'vue-material-design-icons/Eye.vue';
 import ViewVehicleModal from '@/components/partials/ViewVehicleModal.vue';
+import ViewVehicleModal from '@/components/partials/ViewVehicleSchedulesModal.vue';
 import M from 'materialize-css';
 
 import db from './firebase/firebaseInit'
