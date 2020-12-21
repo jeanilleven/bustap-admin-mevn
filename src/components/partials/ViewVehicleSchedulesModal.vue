@@ -74,11 +74,11 @@ export default {
                     'terminal_code': doc.data().terminal_code,
                     'datetime': doc.data().datetime.toDate()
                 }
-                doc.data().terminal_id.get().then(docSnapshot=>{
-                //         var hello = docSnapshot.data();
-                        console.log(docSnapshot.data()['station_number']);
-                        this.schedules.find(data, (elem)=>{elem.terminal_code = docSnapshot.data()['station_number']})
-                    })
+                // doc.data().terminal_id.get().then(docSnapshot=>{
+                // //         var hello = docSnapshot.data();
+                //         console.log(docSnapshot.data()['station_number']);
+                //         this.schedules.find((data)=>{return doc.id == data.id}).terminal_code = docSnapshot.data()['station_number'];
+                //     })
                 this.schedules.push(data)
                 }
             })

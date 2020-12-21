@@ -1,5 +1,8 @@
 <template>
     <div class="container" id="vehiclesTable">
+        <a v-bind:href="'#'+'add-vehicle'" class="icon modal-trigger">
+            <span class="icon"><Plus :size="15"/> Add Vehicle</span> 
+        </a>
         <table>
             <thead>
                 <tr>
@@ -34,6 +37,7 @@
             </tbody>
         </table>
         <ViewVehicleModal v-for="vehicle in vehicles" :key="'vehicle'+vehicle.uid" :id="'vehicle-'+ vehicle.uid" :vehicle="vehicle" :type="'Bus'"/>
+        <AddVehicleModal :key="add-vehicle" :id="add-vehicle"/>
         <ViewVehicleSchedulesModal v-for="vehicle in vehicles" :key="'schedules'+vehicle.uid" :id="'schedules-'+ vehicle.uid" :vehicle="vehicle" :type="'Bus'"/>
     </div>
     
@@ -56,8 +60,10 @@
 
 import DeleteOutline from 'vue-material-design-icons/DeleteOutline.vue';
 import Eye from 'vue-material-design-icons/Eye.vue';
+import Plus from 'vue-material-design-icons/Plus.vue';
 import Calendar from 'vue-material-design-icons/Calendar.vue';
 import ViewVehicleModal from '@/components/partials/ViewVehicleModal.vue';
+import AddVehicleModal from '@/components/partials/AddVehicleModal.vue';
 import ViewVehicleSchedulesModal from '@/components/partials/ViewVehicleSchedulesModal.vue';
 import M from 'materialize-css';
 
@@ -66,9 +72,11 @@ export default {
     name: 'vehiclesTable',
     components: {
         Eye,
+        Plus,
         DeleteOutline,
         ViewVehicleModal,
         ViewVehicleSchedulesModal,
+        AddVehicleModal,
         Calendar
         // "modal": require("vue-materialize/modal")
     },
