@@ -54,8 +54,8 @@
 import DeleteOutline from 'vue-material-design-icons/DeleteOutline.vue';
 import Eye from 'vue-material-design-icons/Eye.vue';
 import ViewVehicleModal from '@/components/partials/ViewVehicleModal.vue';
+import M from 'materialize-css';
 
-import M from 'materialize-css'
 import db from './firebase/firebaseInit'
 export default {
     name: 'vehiclesTable',
@@ -67,9 +67,9 @@ export default {
     },
     bus_code: 'vehicles',
     data(){
-        return{
+        return {
             vehicles: []
-        }
+        };
     },
     created(){
         db.collection('buses').get().then(querSnapshot => {

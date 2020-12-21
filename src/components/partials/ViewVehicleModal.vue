@@ -2,11 +2,34 @@
     <div class="modal">
         <div class="modal-content">
             <table>
-
-                        <h4>Code</h4>
-                        <p>{{vehicle.bus_code}}</p>
-                        <h4>Plate Number</h4>
-                        <p>{{vehicle.plate_number}}</p>
+                        
+            <h4>{{vehicle.type}} Details</h4>
+            <div class="row">
+                <form class="col s12" @submit.prevent>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <label for="bus_code">Bus Code</label>
+                            <input id="bus_code" type="text" class="validate" v-model="bus_code" :value="vehicle.bus_code">
+                        </div>
+                        <div class="input-field col s6">
+                            <label for="plate_number">Plate Number</label>
+                            <input id="plate_number" type="text" class="validate" :value="vehicle.plate_number">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <label for="type">Vehicle Type</label>
+                            <input id="type" type="text" class="validate" :value="vehicle.type">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <button class="btn white-text green" v-on:click="update">Sumbit</button>
+                        </div>
+                        
+                    </div>
+                </form>
+            </div>
         </table>
         </div>
         <div class="modal-footer">
@@ -18,36 +41,27 @@
 <script>
 // import db from '../firebase/firebaseInit'
 
+import M from 'materialize-css'
+
 export default {
     props: ['vehicle'],
+    data: {
+        bus_code: '',
+        plate_number: '',
+        type: '',
+    },
     data(){
     //    return {
     //        vehicles: []
     //    } 
     },
+    methods: {
+        update: function(){
+            console.log(this.bus_code);
+        }
+    },
     created(){
-        // db.collection('buses').where('type', '==', 'Bus').get().then(querySnapshot =>{
-        //     querySnapshot.forEach(doc => {
-        //         const data = {
-        //             code: doc.data().bus_code,
-        //             plateNumber: doc.data().plate_number
-        //         }
-
-        //         this.vehicles.push(data)
-        //     })
-        // })
-        // db.collection('operators').doc(this.operator.uid).collection('owned_vehicles').get().then(querySnapshot => {
-        //     querySnapshot.forEach(doc =>{
-        //         doc.data().vehicle_ref.get().then(element => {
-        //             const data = {
-        //                 code: element.data().bus_code,
-        //                 plateNumber: element.data().plate_number
-        //             }
-
-        //             this.vehicles.push(data)
-        //         })
-        //     })
-        // })
+        M.updateTextFields()
     }
 }
 </script>
