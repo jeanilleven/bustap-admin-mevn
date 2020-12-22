@@ -56,16 +56,13 @@
                 <h4>Add <strong>{{vehicle.bus_code}}</strong> Schedule</h4>
                 <div class="row">
                     <input type="date">
-                    <select name="terminal-options" id="select">
-                        <option v-for="terminal in terminals" v-bind:key="'options-'+terminal.uid" :value="terminal.uid">{{terminal.station_number}}</option>
-                    </select>   
                 </div>
-                        
-                    
-                            <select name="type" id = "add-type">
-                                <option value="Jeepney">Jeepney</option>
-                                <option value="Bus">Bus</option>
-                            </select>
+                    <a class='dropdown-trigger btn' href='#' data-target='dropdown1'>Drop Me!</a>
+
+                    <!-- Dropdown Structure -->
+                    <ul id='dropdown1' class='dropdown-content'>
+                        <li v-for="terminal in terminals" v-bind:key="'options-'+terminal.uid" :value="terminal.uid"><a href="">{{terminal.station_number}}</a></li>
+                    </ul>
                 <div class="input-field col s12">
                     <button class="btn-flat black-text pl-4" v-on:click="moveToTable">Cancel Add</button>
                 </div>
@@ -105,7 +102,10 @@ function checkScheduleId(schedule) {
     console.log(schedule.uid + ' === ' + uid);
     return schedule.uid === uid;
 }
-
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.dropdown-trigger');
+    var instances = M.Dropdown.init(elems, options);
+});
 export default {
     props: ['vehicle'],
     components: {
@@ -140,6 +140,9 @@ export default {
             console.log('CURRENT SCHEDULE');
             console.log(this.currentSchedule);
             this.mode = 'delete';
+        },
+        openDrop: function(){
+            instance.open();
         }
     },
     created(){            

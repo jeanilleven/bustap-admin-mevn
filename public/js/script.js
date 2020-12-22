@@ -7,4 +7,5 @@ $(function(){
     // console.log($('.modal'))
     // console.log('wtf')
     $('select').material_select();
+    $('option').material_select();
 });
