@@ -1,21 +1,18 @@
 <template>
-    <div class="modal">
+    <!-- <div class="modal"> -->
+    <div>
         <div class="modal-content">
             <table>
-                        
-            <h4>Delete Schedule?</h4>
-            <div class="row">
-                
-                <div class="input-field col s12">
+                <div class="row">
+                    <h4>Delete Schedule?</h4>
+                <button class="btn white-text red" v-on:click="deleteSchedule">Delete</button>
+                    <div class="input-field col s12">
+                    </div>
                 </div>
-            </div>
-        </table>
-        </div>
-        <div class="modal-footer">
-            <button class="btn white-text red" v-on:click="deleteSchedule">Delete</button>
-            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+            </table>
         </div>
     </div>
+    <!-- </div> -->
 </template>
 <style lang="scss">
 .customLabel {

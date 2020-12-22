@@ -1,51 +1,48 @@
 <template>
     <div class="modal">
         <div class="modal-content">
-            <table>
-                <select name="" id="">
-                    <option value="h">hrello</option>
-                    <option value="h">hrello</option>
-                    <option value="h">hrello</option>
-                    <option value="h">hrello</option>
-                    <option value="h">hrello</option>
-                    <option value="h">hrello</option>
-                </select>
             <div v-if="mode == 'table'">
-                <h4>{{vehicle.bus_code}} Schedules</h4>
-                <div class="row">
-                    <table>
-                        <thead>
-                            <th>Terminal</th>
-                            <th>Time</th>
-                            <th>Actions</th>
-                        </thead>
-                        <tr v-for="schedule in schedules" v-bind:key="schedule.uid">
-                            <td>
-                                <!-- {{schedule.terminal_code}} -->
-                                <form action=""> 
-                                    <select name="terminal-options" id="select">
-                                        <option v-for="terminal in terminals" v-bind:key="'options-'+terminal.uid" :value="terminal.uid">{{terminal.station_number}}</option>
-                                    </select>   
+                <button v-on:click="moveToDelete">Move to Delete</button>
+                <table>
+                    <h4>{{vehicle.bus_code}} Schedules</h4>
+                    <div class="row">
+                        <table>
+                            <thead>
+                                <th>Terminal</th>
+                                <th>Time</th>
+                                <th>Actions</th>
+                            </thead>
+                            <tr v-for="schedule in schedules" v-bind:key="schedule.uid">
+                                <td>
+                                    <!-- {{schedule.terminal_code}} -->
+                                    <form action=""> 
+                                        <select name="terminal-options" id="select">
+                                            <option v-for="terminal in terminals" v-bind:key="'options-'+terminal.uid" :value="terminal.uid">{{terminal.station_number}}</option>
+                                        </select>   
 
-                                </form>
-
-
-                            </td>
-                            <td>{{schedule.datetime}}</td>
-                            <td>
-                                <a v-bind:href="'#view-'+ schedule.uid" class="icon modal-trigger">
-                                    <span class="icon"><Eye :size="19"/></span> 
-                                </a>
-                                <a v-bind:href="'#delete-schedule-'+ schedule.uid" class="icon modal-trigger">
-                                    <span class="icon"><DeleteOutline :size="19"/></span> 
-                                </a>
-                            </td>
-                        </tr> 
-                    </table>
+                                    </form>
+                                </td>
+                                <td>{{schedule.datetime}}</td>
+                                <td>
+                                    <a v-bind:href="'#view-'+ schedule.uid" class="icon modal-trigger">
+                                        <span class="icon"><Eye :size="19"/></span> 
+                                    </a>
+                                    <button v-on:click="moveToDelete" :id="'delete-schedule'+ schedule.uid">
+                                        <span class="icon"><DeleteOutline :size="19"/></span> 
+                                    </button>
+                                </td>
+                            </tr> 
+                        </table>
+                    </div>        
+                </table>
+            </div>  
+            <div v-if="mode == 'delete'">
+                <DeleteScheduleModal v-for="schedule in schedules"  :key="'delete-schedule-'+schedule.uid" :id="'delete-schedule-'+ schedule.uid" :schedule="schedule"/>
+                
+                <div class="input-field col s12">
+                    <button class="btn-flat black-text pl-4" v-on:click="moveToTable">Cancel</button>
                 </div>
-            </div>        
-        </table>
-        <DeleteScheduleModal v-for="schedule in schedules" :key="'delete-schedule-'+schedule.uid" :id="'delete-schedule-'+ schedule.uid" :schedule="schedule"/>
+            </div>
         </div>
         <div class="modal-footer">
             <a href="#!" class="modal-close waves-effect waves-green btn-flat">close</a>
@@ -69,12 +66,18 @@ import M from 'materialize-css'
 // import { Router } from 'express';
 
 var uid = '';
-
+var currentSchedule;
 function checkTerminalId(terminal) {
     // if(terminal.uid === uid){
     //     console.log(terminal.uid +' === ' + uid);
     // }
   return terminal.uid === uid;
+}
+function checkScheduleId(schedule) {
+    // if(terminal.uid === uid){
+    //     console.log(terminal.uid +' === ' + uid);
+    // }
+  return schedule.uid === uid;
 }
 export default {
     props: ['vehicle'],
@@ -102,8 +105,10 @@ export default {
         moveToAdd: function(){
            this.mode = 'add';
         },
-        moveToDelete: function(){
-           this.mode = 'delete';
+        moveToDelete: function(event){
+            console.log(event.target.id);
+            currentSchedule = this.terminals.find(checkTerminalId);
+            this.mode = 'delete';
         }
     },
     created(){            
