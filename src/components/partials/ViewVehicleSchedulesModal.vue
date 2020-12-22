@@ -31,7 +31,7 @@
                                 </th>
                                 <td>{{schedule.datetime.toDate()}}</td>
                                 <td>
-                                    <button v-on:click="moveToEdit" :id="'udpate-schedule-'+ schedule.uid">
+                                    <button @click="moveToEdit(schedule.uid, schedule.terminalObject)" :id="'udpate-schedule-'+ schedule.uid">
                                         <span class="icon"><Eye :size="19"/></span> 
                                     </button>
                                     <button v-on:click="moveToDelete" :id="'delete-schedule-'+ schedule.uid">
@@ -87,16 +87,7 @@
 
             <!-- EDIT -->
             <div v-if="mode == 'edit'">
-                
-                <h4>Edit <strong>{{vehicle.bus_code}}</strong> Schedule</h4>
-                <div class="row">
-                    <input type="datetime-local" :id="'update-datetime-'+vehicle.uid">
-                </div>
-                <div class="input-field col s12">
-                    <select class="browser-default" style="display:block" name="select-terminal" :id="'update-terminal-'+vehicle.uid">
-                        <option v-for="terminal in terminals" v-bind:key="'options-'+terminal.uid" :value="terminal.uid">{{terminal.station_number}}</option>
-                    </select>
-                </div>
+                <UpdateScheduleModal :vehicle="vehicle" :terminals="terminals" v-bind="currentSchedule"/>
                     
                 <div class="input-field col s12">
                     <button class="btn-flat white-text pl-4 red" v-on:click="moveToTable">Cancel Add</button>
@@ -119,7 +110,7 @@
 import DeleteOutline from 'vue-material-design-icons/DeleteOutline.vue';
 import Eye from 'vue-material-design-icons/Eye.vue';
 
-// import DeleteScheduleModal from '@/components/partials/DeleteScheduleModal.vue';
+import UpdateScheduleModal from '@/components/partials/UpdateScheduleModal.vue';
 
 import db from '../firebase/firebaseInit'
 import M from 'materialize-css'
@@ -146,11 +137,13 @@ export default {
         DeleteOutline,
         
         // DeleteScheduleModal,
+        UpdateScheduleModal
     },
     data(){
         return{
             mode: 'table',
             currentSchedule: {},
+            currentTerminal: {},
             // currentSchedule: '',
             schedules: [],
             terminals: []
@@ -160,19 +153,20 @@ export default {
         moveToTable: function(){
             this.mode = 'table';
         },
-        moveToEdit: function(){
-            console.log(event.target.parentNode.parentNode.parentNode.parentNode.id.replace('udpate-schedule-', ''));
-            uid = event.target.parentNode.parentNode.parentNode.parentNode.id.replace('udpate-schedule-', '');
+        moveToEdit: function(scheduleUID, termObject){
+            // console.log(event.target.parentNode.parentNode.parentNode.parentNode.id.replace('udpate-schedule-', ''));
+            // uid =       event.target.parentNode.parentNode.parentNode.parentNode.id.replace('udpate-schedule-', '');
+            uid = scheduleUID;
             this.currentSchedule = this.schedules.find(checkScheduleId);
+
             console.log('EDITING CURRENT SCHEDULE: ');
             console.log(this.currentSchedule);
-
-            //updating inputs
-            console.log('update-datetime-'+this.vehicle.uid)
-            document.getElementById('update-datetime-'+this.vehicle.uid).value = this.currentSchedule.datetime;
-            // var terminal_input
+            this.currentTerminal = termObject;
+            console.log('WITH CURRENT TERMINAL: ');
+            console.log(this.currentTerminal);
 
             this.mode = 'edit';
+
         },
         moveToAdd: function(){
             this.mode = 'add';
@@ -204,27 +198,6 @@ export default {
             });
             this.moveToTable();
         },
-        updateSchedule: function(){
-            var currentVehicle = this.vehicle;
-
-            var dateTime = new Date(document.getElementById('update-datetime-'+this.vehicle.uid).value);
-
-            uid = document.getElementById('update-terminal-'+this.vehicle.uid).value;
-            var terminal = this.terminals.find(checkTerminalId);
-            console.log('CURRENT VEHICLE: ' + currentVehicle.uid);
-            console.log('DATETIME: ' + dateTime);
-            console.log('TERMINAL: '+ terminal);
-            db.collection('busSchedules').doc(this.currentSchedule.uid).update({
-                'datetime': dateTime,
-                'deleted': false,
-                'terminal_code': terminal.station_number,
-                'terminal_id': db.collection('terminals').doc(terminal.uid),
-                'type': currentVehicle.type,
-                'vehicle_code': currentVehicle.bus_code,
-                'vehicle_id': db.collection('buses').doc(currentVehicle.uid)
-            });
-            this.moveToTable();
-        },
         deleteSchedule: function(){
             db.collection('busSchedules').doc(this.currentSchedule.uid).update({
                 'deleted': true
@@ -233,7 +206,7 @@ export default {
                     // router.push('/vehicles');
                 }
             );
-        }
+        },
     },
     created(){            
         db.collection('terminals').get().then(querSnapshot => {
@@ -255,7 +228,8 @@ export default {
                             'uid': doc.id,
                             // 'terminal_code': doc.data().terminal_code,
                             'terminal_code': (this.terminals.find(checkTerminalId) != null)?this.terminals.find(checkTerminalId).station_number:'not_found',
-                            'datetime': doc.data().datetime
+                            'datetime': doc.data().datetime,
+                            'terminalObject': this.terminals.find(checkTerminalId)
                         }
                         this.schedules.push(data)
                     }
