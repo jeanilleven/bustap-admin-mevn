@@ -59,9 +59,22 @@
                 </div>
                     <a class='dropdown-trigger btn' href='#' data-target='dropdown1'>Drop Me!</a>
 
-                    <!-- Dropdown Structure -->
+                    <!-- Dropdown Structure
                     <ul id='dropdown1' class='dropdown-content'>
                         <li v-for="terminal in terminals" v-bind:key="'options-'+terminal.uid" :value="terminal.uid"><a href="">{{terminal.station_number}}</a></li>
+                    </ul> -->
+
+                    <!-- Dropdown Trigger -->
+                    <a class='dropdown-trigger btn' href='#' data-target='dropdown1'>Drop Me!</a>
+
+                    <!-- Dropdown Structure -->
+                    <ul id='dropdown1' class='dropdown-content'>
+                        <li><a href="#!">one</a></li>
+                        <li><a href="#!">two</a></li>
+                        <li class="divider" tabindex="-1"></li>
+                        <li><a href="#!">three</a></li>
+                        <li><a href="#!"><i class="material-icons">view_module</i>four</a></li>
+                        <li><a href="#!"><i class="material-icons">cloud</i>five</a></li>
                     </ul>
                 <div class="input-field col s12">
                     <button class="btn-flat black-text pl-4" v-on:click="moveToTable">Cancel Add</button>
@@ -102,10 +115,6 @@ function checkScheduleId(schedule) {
     console.log(schedule.uid + ' === ' + uid);
     return schedule.uid === uid;
 }
-document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.dropdown-trigger');
-    var instances = M.Dropdown.init(elems, options);
-});
 export default {
     props: ['vehicle'],
     components: {
@@ -141,9 +150,6 @@ export default {
             console.log(this.currentSchedule);
             this.mode = 'delete';
         },
-        openDrop: function(){
-            instance.open();
-        }
     },
     created(){            
         db.collection('terminals').get().then(querSnapshot => {
@@ -179,6 +185,13 @@ export default {
             }
         })
         M.updateTextFields()
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            var elem = document.querySelector('.dropdown-trigger');
+            var instance = M.Dropdown.getInstance(elem);
+
+            instance.open()
+        });
         // $(document).ready(function() {
         //     $('select').material_select();
         // });

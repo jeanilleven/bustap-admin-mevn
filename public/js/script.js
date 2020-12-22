@@ -5,7 +5,7 @@ $(function(){
     // $('.tabs').tabs();
     // M.AutoInit();
     // console.log($('.modal'))
-    // console.log('wtf')
-    $('select').material_select();
-    $('option').material_select();
+    // // console.log('wtf')
+    // $('select').material_select();
+    // $('option').material_select();
 });
