@@ -29,11 +29,11 @@
                                 <th>
                                     {{schedule.terminal_code}}
                                 </th>
-                                <td>{{schedule.datetime}}</td>
+                                <td>{{schedule.datetime.toDate()}}</td>
                                 <td>
-                                    <a v-bind:href="'#view-'+ schedule.uid" class="icon modal-trigger">
+                                    <button v-on:click="moveToEdit" :id="'udpate-schedule-'+ schedule.uid">
                                         <span class="icon"><Eye :size="19"/></span> 
-                                    </a>
+                                    </button>
                                     <button v-on:click="moveToDelete" :id="'delete-schedule-'+ schedule.uid">
                                         <div>
                                             <span class="icon"><DeleteOutline :size="19"/></span> 
@@ -75,6 +75,25 @@
                 </div>
                 <div class="input-field col s12">
                     <select class="browser-default" style="display:block" name="select-terminal" :id="'add-terminal-'+vehicle.uid">
+                        <option v-for="terminal in terminals" v-bind:key="'options-'+terminal.uid" :value="terminal.uid">{{terminal.station_number}}</option>
+                    </select>
+                </div>
+                    
+                <div class="input-field col s12">
+                    <button class="btn-flat white-text pl-4 red" v-on:click="moveToTable">Cancel Add</button>
+                    <button style="margin-left: 10px" class="btn-flat white-text pl-4 green" v-on:click="addSchedule">Add Schedule</button>
+                </div>
+            </div>
+
+            <!-- EDIT -->
+            <div v-if="mode == 'edit'">
+                
+                <h4>Edit <strong>{{vehicle.bus_code}}</strong> Schedule</h4>
+                <div class="row">
+                    <input type="datetime-local" :id="'update-datetime-'+vehicle.uid">
+                </div>
+                <div class="input-field col s12">
+                    <select class="browser-default" style="display:block" name="select-terminal" :id="'update-terminal-'+vehicle.uid">
                         <option v-for="terminal in terminals" v-bind:key="'options-'+terminal.uid" :value="terminal.uid">{{terminal.station_number}}</option>
                     </select>
                 </div>
@@ -139,19 +158,30 @@ export default {
     },
     methods: {
         moveToTable: function(){
-           this.mode = 'table';
+            this.mode = 'table';
         },
         moveToEdit: function(){
-           this.mode = 'edit';
+            console.log(event.target.parentNode.parentNode.parentNode.parentNode.id.replace('udpate-schedule-', ''));
+            uid = event.target.parentNode.parentNode.parentNode.parentNode.id.replace('udpate-schedule-', '');
+            this.currentSchedule = this.schedules.find(checkScheduleId);
+            console.log('EDITING CURRENT SCHEDULE: ');
+            console.log(this.currentSchedule);
+
+            //updating inputs
+            console.log('update-datetime-'+this.vehicle.uid)
+            document.getElementById('update-datetime-'+this.vehicle.uid).value = this.currentSchedule.datetime;
+            // var terminal_input
+
+            this.mode = 'edit';
         },
         moveToAdd: function(){
-           this.mode = 'add';
+            this.mode = 'add';
         },
         moveToDelete: function(){
             console.log(event.target.parentNode.parentNode.parentNode.parentNode.id.replace('delete-schedule-', ''));
             uid = event.target.parentNode.parentNode.parentNode.parentNode.id.replace('delete-schedule-', '');
             this.currentSchedule = this.schedules.find(checkScheduleId);
-            console.log('CURRENT SCHEDULE');
+            console.log('DELETING CURRENT SCHEDULE');
             console.log(this.currentSchedule);
             this.mode = 'delete';
         },
@@ -176,13 +206,15 @@ export default {
         },
         updateSchedule: function(){
             var currentVehicle = this.vehicle;
-            var dateTime = new Date(document.getElementById('add-datetime-'+this.vehicle.uid).value);
-            uid = document.getElementById('add-terminal-'+this.vehicle.uid).value;
+
+            var dateTime = new Date(document.getElementById('update-datetime-'+this.vehicle.uid).value);
+
+            uid = document.getElementById('update-terminal-'+this.vehicle.uid).value;
             var terminal = this.terminals.find(checkTerminalId);
             console.log('CURRENT VEHICLE: ' + currentVehicle.uid);
             console.log('DATETIME: ' + dateTime);
             console.log('TERMINAL: '+ terminal);
-            db.collection('busSchedules').update({
+            db.collection('busSchedules').doc(this.currentSchedule.uid).update({
                 'datetime': dateTime,
                 'deleted': false,
                 'terminal_code': terminal.station_number,
@@ -223,7 +255,7 @@ export default {
                             'uid': doc.id,
                             // 'terminal_code': doc.data().terminal_code,
                             'terminal_code': (this.terminals.find(checkTerminalId) != null)?this.terminals.find(checkTerminalId).station_number:'not_found',
-                            'datetime': doc.data().datetime.toDate()
+                            'datetime': doc.data().datetime
                         }
                         this.schedules.push(data)
                     }
