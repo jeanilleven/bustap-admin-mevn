@@ -87,11 +87,10 @@
 
             <!-- EDIT -->
             <div v-if="mode == 'edit'">
-                <UpdateScheduleModal :vehicle="vehicle" :terminals="terminals" v-bind="currentSchedule"/>
+                <UpdateScheduleModal :vehicle="vehicle" :terminals="terminals" :schedule="currentSchedule"/>
                     
                 <div class="input-field col s12">
                     <button class="btn-flat white-text pl-4 red" v-on:click="moveToTable">Cancel Add</button>
-                    <button style="margin-left: 10px" class="btn-flat white-text pl-4 green" v-on:click="addSchedule">Add Schedule</button>
                 </div>
             </div>
         </div>
