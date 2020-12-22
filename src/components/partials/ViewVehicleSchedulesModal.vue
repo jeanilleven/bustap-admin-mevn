@@ -2,9 +2,16 @@
     <div class="modal">
         <div class="modal-content">
             <div v-if="mode == 'table'">
-                <button v-on:click="moveToDelete">Move to Delete</button>
+                
                 <table>
-                    <h4>{{vehicle.bus_code}} Schedules</h4>
+                    <h4>
+                        <strong>{{vehicle.bus_code}}</strong> Schedules
+                        <button v-on:click="moveToAdd" class="btn-flat cyan white-text">
+                            <span class="icon">
+                                Add Schedule
+                            </span> 
+                        </button>
+                    </h4>
                     <div class="row">
                         <table>
                             <thead>
@@ -19,12 +26,6 @@
                                 </td>
                                 <th>
                                     {{schedule.terminal_code}}
-                                    <!-- <form action=""> 
-                                        <select name="terminal-options" id="select">
-                                            <option v-for="terminal in terminals" v-bind:key="'options-'+terminal.uid" :value="terminal.uid">{{terminal.station_number}}</option>
-                                        </select>   
-
-                                    </form> -->
                                 </th>
                                 <td>{{schedule.datetime}}</td>
                                 <td>
@@ -47,19 +48,31 @@
                 <DeleteScheduleModal :schedule="currentSchedule"/>
                 
                 <div class="input-field col s12">
-                    <button class="btn-flat black-text pl-4" v-on:click="moveToTable">Cancel</button>
+                    <button class="btn-flat black-text pl-4" v-on:click="moveToTable">Cancel Delete</button>
                 </div>
             </div>
             <div v-if="mode == 'add'">
-                <DeleteScheduleModal :schedule="currentSchedule"/>
                 
+                <h4>Add <strong>{{vehicle.bus_code}}</strong> Schedule</h4>
+                <div class="row">
+                    <input type="date">
+                    <select name="terminal-options" id="select">
+                        <option v-for="terminal in terminals" v-bind:key="'options-'+terminal.uid" :value="terminal.uid">{{terminal.station_number}}</option>
+                    </select>   
+                </div>
+                        
+                    
+                            <select name="type" id = "add-type">
+                                <option value="Jeepney">Jeepney</option>
+                                <option value="Bus">Bus</option>
+                            </select>
                 <div class="input-field col s12">
-                    <button class="btn-flat black-text pl-4" v-on:click="moveToTable">Cancel</button>
+                    <button class="btn-flat black-text pl-4" v-on:click="moveToTable">Cancel Add</button>
                 </div>
             </div>
         </div>
         <div class="modal-footer">
-            <a href="#!" class="modal-close waves-effect waves-green btn-flat">close</a>
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close Schedules</a>
         </div>
     </div>
 </template>
@@ -163,6 +176,9 @@ export default {
             }
         })
         M.updateTextFields()
+        // $(document).ready(function() {
+        //     $('select').material_select();
+        // });
     }
 }
 </script>

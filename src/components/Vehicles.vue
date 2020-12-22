@@ -1,8 +1,15 @@
 <template>
     <div class="container" id="vehiclesTable">
-        <a v-bind:href="'#'+'add-vehicle'" class="icon modal-trigger">
-            <span class="icon"><Plus :size="15"/> Add Vehicle</span> 
-        </a>
+        <h1>
+            Vehicles 
+            <a v-bind:href="'#'+'add-vehicle'" class="icon modal-trigger btn-flat cyan white-text">
+                <span class="icon" style="margin-left: 0px" >
+                    <!-- <Plus :size="15"/>  -->
+                    Add Vehicle
+                </span> 
+            </a>
+        </h1>
+        
         <table>
             <thead>
                 <tr>
@@ -61,7 +68,7 @@
 //icons
 import DeleteOutline from 'vue-material-design-icons/DeleteOutline.vue';
 import Eye from 'vue-material-design-icons/Eye.vue';
-import Plus from 'vue-material-design-icons/Plus.vue';
+// import Plus from 'vue-material-design-icons/Plus.vue';
 import Calendar from 'vue-material-design-icons/Calendar.vue';
 
 //modals
@@ -79,7 +86,7 @@ export default {
     components: {
         //icons
         Eye,
-        Plus,
+        // Plus,
         DeleteOutline,
         Calendar,
 
