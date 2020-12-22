@@ -2,6 +2,7 @@
     <div class="modal">
         
         <div class="modal-content">
+            <!-- TABLE -->
             <div v-if="mode == 'table'">
                 
                 <table>
@@ -45,27 +46,42 @@
                     </div>        
                 </table>
             </div>  
+
+            <!-- DELETE -->
             <div v-if="mode == 'delete'">
-                <DeleteScheduleModal :schedule="currentSchedule"/>
+                
+                <div class="modal-content">
+                    <table>
+                        <div class="row">
+                            <h4>Delete Schedule?</h4>
+                        <button class="btn white-text red" v-on:click="deleteSchedule">Delete</button>
+                            <div class="input-field col s12">
+                            </div>
+                        </div>
+                    </table>
+                </div>
                 
                 <div class="input-field col s12">
                     <button class="btn-flat black-text pl-4" v-on:click="moveToTable">Cancel Delete</button>
                 </div>
             </div>
+
+            <!-- ADD -->
             <div v-if="mode == 'add'">
                 
                 <h4>Add <strong>{{vehicle.bus_code}}</strong> Schedule</h4>
                 <div class="row">
-                    <input type="datetime-local">
+                    <input type="datetime-local" :id="'add-datetime-'+vehicle.uid">
                 </div>
                 <div class="input-field col s12">
-                    <select class="browser-default" style="display:block" name="select-terminal">
+                    <select class="browser-default" style="display:block" name="select-terminal" :id="'add-terminal-'+vehicle.uid">
                         <option v-for="terminal in terminals" v-bind:key="'options-'+terminal.uid" :value="terminal.uid">{{terminal.station_number}}</option>
                     </select>
                 </div>
                     
                 <div class="input-field col s12">
                     <button class="btn-flat white-text pl-4 red" v-on:click="moveToTable">Cancel Add</button>
+                    <button style="margin-left: 10px" class="btn-flat white-text pl-4 green" v-on:click="addSchedule">Add Schedule</button>
                 </div>
             </div>
         </div>
@@ -84,7 +100,7 @@
 import DeleteOutline from 'vue-material-design-icons/DeleteOutline.vue';
 import Eye from 'vue-material-design-icons/Eye.vue';
 
-import DeleteScheduleModal from '@/components/partials/DeleteScheduleModal.vue';
+// import DeleteScheduleModal from '@/components/partials/DeleteScheduleModal.vue';
 
 import db from '../firebase/firebaseInit'
 import M from 'materialize-css'
@@ -110,7 +126,7 @@ export default {
         Eye,
         DeleteOutline,
         
-        DeleteScheduleModal,
+        // DeleteScheduleModal,
     },
     data(){
         return{
@@ -134,14 +150,57 @@ export default {
         moveToDelete: function(){
             console.log(event.target.parentNode.parentNode.parentNode.parentNode.id.replace('delete-schedule-', ''));
             uid = event.target.parentNode.parentNode.parentNode.parentNode.id.replace('delete-schedule-', '');
-            this.currentSchedule = this.terminals.find(checkScheduleId);
+            this.currentSchedule = this.schedules.find(checkScheduleId);
             console.log('CURRENT SCHEDULE');
             console.log(this.currentSchedule);
             this.mode = 'delete';
         },
         addSchedule: function(){
-            var busCode = document.getElementById('add-bus_code').value;
-            var terminal = document.getElementById('add-plate_number').value;
+            var currentVehicle = this.vehicle;
+            var dateTime = new Date(document.getElementById('add-datetime-'+this.vehicle.uid).value);
+            uid = document.getElementById('add-terminal-'+this.vehicle.uid).value;
+            var terminal = this.terminals.find(checkTerminalId);
+            console.log('CURRENT VEHICLE: ' + currentVehicle.uid);
+            console.log('DATETIME: ' + dateTime);
+            console.log('TERMINAL: '+ terminal);
+            db.collection('busSchedules').add({
+                'datetime': dateTime,
+                'deleted': false,
+                'terminal_code': terminal.station_number,
+                'terminal_id': db.collection('terminals').doc(terminal.uid),
+                'type': currentVehicle.type,
+                'vehicle_code': currentVehicle.bus_code,
+                'vehicle_id': db.collection('buses').doc(currentVehicle.uid)
+            });
+            this.moveToTable();
+        },
+        updateSchedule: function(){
+            var currentVehicle = this.vehicle;
+            var dateTime = new Date(document.getElementById('add-datetime-'+this.vehicle.uid).value);
+            uid = document.getElementById('add-terminal-'+this.vehicle.uid).value;
+            var terminal = this.terminals.find(checkTerminalId);
+            console.log('CURRENT VEHICLE: ' + currentVehicle.uid);
+            console.log('DATETIME: ' + dateTime);
+            console.log('TERMINAL: '+ terminal);
+            db.collection('busSchedules').update({
+                'datetime': dateTime,
+                'deleted': false,
+                'terminal_code': terminal.station_number,
+                'terminal_id': db.collection('terminals').doc(terminal.uid),
+                'type': currentVehicle.type,
+                'vehicle_code': currentVehicle.bus_code,
+                'vehicle_id': db.collection('buses').doc(currentVehicle.uid)
+            });
+            this.moveToTable();
+        },
+        deleteSchedule: function(){
+            db.collection('busSchedules').doc(this.currentSchedule.uid).update({
+                'deleted': true
+            }).then(()=>{
+                    location.reload();
+                    // router.push('/vehicles');
+                }
+            );
         }
     },
     created(){            
