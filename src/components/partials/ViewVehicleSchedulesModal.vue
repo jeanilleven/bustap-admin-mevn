@@ -8,27 +8,34 @@
                     <div class="row">
                         <table>
                             <thead>
+                                <th>ID</th>
                                 <th>Terminal</th>
                                 <th>Time</th>
                                 <th>Actions</th>
                             </thead>
-                            <tr v-for="schedule in schedules" v-bind:key="schedule.uid">
+                            <tr v-for="(schedule, index) in schedules" v-bind:key="schedule.uid">
+                                <td>
+                                    {{schedule.uid}}
+                                </td>
                                 <td>
                                     <!-- {{schedule.terminal_code}} -->
-                                    <form action=""> 
+                                    <!-- <form action=""> 
                                         <select name="terminal-options" id="select">
                                             <option v-for="terminal in terminals" v-bind:key="'options-'+terminal.uid" :value="terminal.uid">{{terminal.station_number}}</option>
                                         </select>   
 
-                                    </form>
+                                    </form> -->
                                 </td>
                                 <td>{{schedule.datetime}}</td>
                                 <td>
                                     <a v-bind:href="'#view-'+ schedule.uid" class="icon modal-trigger">
                                         <span class="icon"><Eye :size="19"/></span> 
                                     </a>
-                                    <button v-on:click="moveToDelete" :id="'delete-schedule'+ schedule.uid">
-                                        <span class="icon"><DeleteOutline :size="19"/></span> 
+                                    <button v-on:click="moveToDelete" :id="'delete-schedule-'+ schedule.uid">
+                                        <div>
+                                            <span class="icon"><DeleteOutline :size="19"/></span> 
+
+                                        </div>
                                     </button>
                                 </td>
                             </tr> 
@@ -37,7 +44,7 @@
                 </table>
             </div>  
             <div v-if="mode == 'delete'">
-                <DeleteScheduleModal v-for="schedule in schedules"  :key="'delete-schedule-'+schedule.uid" :id="'delete-schedule-'+ schedule.uid" :schedule="schedule"/>
+                <DeleteScheduleModal :key="'delete-schedule-'+schedule.uid" :id="'delete-schedule-'+ schedule.uid" :schedule="currentSchedule"/>
                 
                 <div class="input-field col s12">
                     <button class="btn-flat black-text pl-4" v-on:click="moveToTable">Cancel</button>
@@ -74,9 +81,6 @@ function checkTerminalId(terminal) {
   return terminal.uid === uid;
 }
 function checkScheduleId(schedule) {
-    // if(terminal.uid === uid){
-    //     console.log(terminal.uid +' === ' + uid);
-    // }
   return schedule.uid === uid;
 }
 export default {
@@ -90,7 +94,7 @@ export default {
     data(){
         return{
             mode: 'table',
-            currentSched: '',
+            // currentSchedule: '',
             schedules: [],
             terminals: []
         }
@@ -105,9 +109,11 @@ export default {
         moveToAdd: function(){
            this.mode = 'add';
         },
-        moveToDelete: function(event){
-            console.log(event.target.id);
-            currentSchedule = this.terminals.find(checkTerminalId);
+        moveToDelete: function(){
+            console.log(event.target.parentNode.parentNode.parentNode.parentNode.id.replace('delete-schedule-', ''));
+            currentSchedule = this.terminals.find(checkScheduleId);
+            console.log('CURRENT SCHEDULE');
+            console.log(currentSchedule);
             this.mode = 'delete';
         }
     },
