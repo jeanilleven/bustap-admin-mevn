@@ -1,0 +1,15 @@
+-------------------- Auto-Git Log --------------------
+		Tue Dec 22 2020 09:02:55 GMT+0800 (Singapore Standard Time)
+------------------------------------------------------
+
+Modified files:
+
+
+Created files:
+* .autogit/logs/log-22-11-2020-8-32-39.txt
+
+
+Deleted files:
+
+
+Renamed files:

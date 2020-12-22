@@ -22,7 +22,7 @@
                         <tr v-for="schedule in schedules" v-bind:key="schedule.uid">
                             <td>
                                 <!-- {{schedule.terminal_code}} -->
-                                <form action="">
+                                <form action=""> 
                                     <select name="terminal-options" id="select">
                                         <option v-for="terminal in terminals" v-bind:key="'options-'+terminal.uid" :value="terminal.uid">{{terminal.station_number}}</option>
                                     </select>   
