@@ -13,19 +13,19 @@
                                 <th>Time</th>
                                 <th>Actions</th>
                             </thead>
-                            <tr v-for="(schedule, index) in schedules" v-bind:key="schedule.uid">
+                            <tr v-for="schedule in schedules" v-bind:key="schedule.uid">
                                 <td>
                                     {{schedule.uid}}
                                 </td>
-                                <td>
-                                    <!-- {{schedule.terminal_code}} -->
+                                <th>
+                                    {{schedule.terminal_code}}
                                     <!-- <form action=""> 
                                         <select name="terminal-options" id="select">
                                             <option v-for="terminal in terminals" v-bind:key="'options-'+terminal.uid" :value="terminal.uid">{{terminal.station_number}}</option>
                                         </select>   
 
                                     </form> -->
-                                </td>
+                                </th>
                                 <td>{{schedule.datetime}}</td>
                                 <td>
                                     <a v-bind:href="'#view-'+ schedule.uid" class="icon modal-trigger">
@@ -44,7 +44,14 @@
                 </table>
             </div>  
             <div v-if="mode == 'delete'">
-                <DeleteScheduleModal :key="'delete-schedule-'+schedule.uid" :id="'delete-schedule-'+ schedule.uid" :schedule="currentSchedule"/>
+                <DeleteScheduleModal :schedule="currentSchedule"/>
+                
+                <div class="input-field col s12">
+                    <button class="btn-flat black-text pl-4" v-on:click="moveToTable">Cancel</button>
+                </div>
+            </div>
+            <div v-if="mode == 'add'">
+                <DeleteScheduleModal :schedule="currentSchedule"/>
                 
                 <div class="input-field col s12">
                     <button class="btn-flat black-text pl-4" v-on:click="moveToTable">Cancel</button>
@@ -73,16 +80,19 @@ import M from 'materialize-css'
 // import { Router } from 'express';
 
 var uid = '';
-var currentSchedule;
+// var currentSchedule;
 function checkTerminalId(terminal) {
     // if(terminal.uid === uid){
     //     console.log(terminal.uid +' === ' + uid);
     // }
-  return terminal.uid === uid;
+    return terminal.uid === uid;
 }
+
 function checkScheduleId(schedule) {
-  return schedule.uid === uid;
+    console.log(schedule.uid + ' === ' + uid);
+    return schedule.uid === uid;
 }
+
 export default {
     props: ['vehicle'],
     components: {
@@ -94,6 +104,7 @@ export default {
     data(){
         return{
             mode: 'table',
+            currentSchedule: {},
             // currentSchedule: '',
             schedules: [],
             terminals: []
@@ -111,9 +122,10 @@ export default {
         },
         moveToDelete: function(){
             console.log(event.target.parentNode.parentNode.parentNode.parentNode.id.replace('delete-schedule-', ''));
-            currentSchedule = this.terminals.find(checkScheduleId);
+            uid = event.target.parentNode.parentNode.parentNode.parentNode.id.replace('delete-schedule-', '');
+            this.currentSchedule = this.terminals.find(checkScheduleId);
             console.log('CURRENT SCHEDULE');
-            console.log(currentSchedule);
+            console.log(this.currentSchedule);
             this.mode = 'delete';
         }
     },
