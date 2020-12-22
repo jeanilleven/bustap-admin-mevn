@@ -22,9 +22,6 @@
 </template>
 
 <style lang="scss">
-.navbar {
-
-}
 </style>
 
 <script>
