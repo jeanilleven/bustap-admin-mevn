@@ -43,7 +43,7 @@
                                 </a>
                             </td>
                             <td>
-                                <a href="#" class="icon">
+                                <a v-bind:href="'#delete-'+ operator.uid" class="icon modal-trigger">
                                     <span class="icon"><DeleteOutline :size="19"/></span> 
                                 </a>
                             </td>
@@ -86,7 +86,7 @@
                                 </a>
                             </td>
                             <td>
-                                <a href="#" class="icon">
+                                <a  v-bind:href="'#delete-'+ operator.uid" class="icon modal-trigger">
                                     <span class="icon"><DeleteOutline :size="19"/></span> 
                                 </a>
                             </td>
@@ -105,6 +105,9 @@
     <ViewOperator v-for="operator in operators" :key="'operator-'+operator.uid" :id="'operator-'+ operator.uid" :operator="operator"/>
     <!-- add operator modal -->
     <AddOperatorModal/>
+     <!-- delete operator modal -->
+    <DeleteOperatorModal v-for="operator in busOperators" :key="'delete-'+operator.uid" :id="'delete-'+ operator.uid" :operator="operator"/>
+    <DeleteOperatorModal v-for="operator in jeepOperators" :key="'delete-'+operator.uid" :id="'delete-'+ operator.uid" :operator="operator"/>
 
     </div>
 </template>
@@ -118,6 +121,7 @@ import VehicleModal from '@/components/partials/VehicleModal'
 import EmployeeModal from '@/components/partials/EmployeeModal'
 import ViewOperator from '@/components/partials/ViewOperator'
 import AddOperatorModal from '@/components/partials/AddOperatorModal'
+import DeleteOperatorModal from '@/components/partials/DeleteOperatorModal'
 import db from './firebase/firebaseInit'
 import M from 'materialize-css'
 
@@ -131,7 +135,8 @@ export default {
         VehicleModal,
         EmployeeModal,
         ViewOperator,
-        AddOperatorModal
+        AddOperatorModal,
+        DeleteOperatorModal
     },
     data(){
         return{
@@ -141,8 +146,14 @@ export default {
         }
     },
     created(){
-        const busOperatorCollection = db.collection('operators').where('type', '==', 'Bus')
-        const jeepOperatorCollection = db.collection('operators').where('type', '==', 'Jeepney')
+        const busQuery = db.collection('operators').where('type', '==', 'Bus')
+        const jeepQuery = db.collection('operators').where('type', '==', 'Jeepney')
+
+        // const busOperatorCollection = db.collection('operators').where('type', '==', 'Bus')
+        // const jeepOperatorCollection = db.collection('operators').where('type', '==', 'Jeepney')
+
+        const busOperatorCollection = busQuery.where('deleted', '==', false)
+        const jeepOperatorCollection =  jeepQuery.where('deleted', '==', false)
 
         // changed from .get().then() to .onSnapshot to get realtime changes or additions to the collection
         // snap.docChanges loads all docs from the db onLoad and also allows us to only append new data added into the DOM
@@ -156,6 +167,7 @@ export default {
                         'fname':  change.doc.data().fname,
                         'lname': change.doc.data().lname,
                         'email': change.doc.data().email,
+                        'type': change.doc.data().type,
                         'phoneNum': change.doc.data().phone_number
                     }
 
@@ -174,6 +186,7 @@ export default {
                         'fname':  change.doc.data().fname,
                         'lname': change.doc.data().lname,
                         'email': change.doc.data().email,
+                        'type': change.doc.data().type,
                         'phoneNum': change.doc.data().phone_number
                     }
 

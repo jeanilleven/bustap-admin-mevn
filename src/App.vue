@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <Navbar/>
+    <!-- <Navbar v-if="checkIfSignInPage !== '/'"/> -->
+     <Navbar />
     <!-- <SideNav/> -->
     <router-view></router-view>
   </div>
@@ -18,6 +19,11 @@ export default {
   },
   mounted(){
     M.AutoInit()
+  },
+  computed: {
+    checkIfSignInPage(){
+      return this.$route.path;
+    }
   }
 }
 </script>
