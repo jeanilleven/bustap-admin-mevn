@@ -23,8 +23,8 @@
 </style>
 <script>
 import db from '../firebase/firebaseInit'
-
 import M from 'materialize-css'
+
 // import { Router } from 'express';
 
 export default {

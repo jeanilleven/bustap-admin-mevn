@@ -53,7 +53,6 @@
 <script>
 import db from '../firebase/firebaseInit'
 import M from 'materialize-css'
-
 export default {
     props: ['employee'],
     created(){
@@ -68,12 +67,6 @@ export default {
           var license = document.getElementById('license-'+this.employee.uid).value
           var type = document.getElementById('type-'+this.employee.uid).value
 
-          console.log(fname)
-          console.log(lname)
-          console.log(email)
-          console.log(phone_num)
-          console.log(license)
-          console.log(type)
           db.collection('employees').doc(this.employee.uid).update({
             'fname': fname, 
             'lname': lname,
@@ -82,7 +75,7 @@ export default {
             'phone_number': phone_num, 
             'type': type
           }).then(()=>{
-              location.reload();
+              location.reload()
             }
           )
         }
