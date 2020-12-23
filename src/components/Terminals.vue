@@ -1,8 +1,8 @@
 <template>
     <div class="container">
-        <div class = "row">
-            <div class = "col s12">
-                <ul class = "tabs">
+        <div class="row">
+            <div class="col s12">
+                <ul class="tabs">
                      <li class="col s1 right"><a href="#add-terminal" class="black-cyan modal-trigger">Add</a></li>
                 </ul>
             </div>
