@@ -92,7 +92,7 @@
                     </div>
                     <div class="modal-footer">
                         <a href="#!" class="modal-close waves-effect waves-green btn-flat cyan-text text-accent-4">Close</a>
-                        <button type="submit"  class="modal-close waves-effect waves-cyan btn cyan accent-4">Add</button>
+                        <button type="submit"  class="waves-effect waves-cyan btn cyan accent-4">Add</button>
                     </div>
                 </form>
             </div>
@@ -118,15 +118,18 @@ export default {
     },
     methods:{
         addTerminal(){
-            db.collection('terminals').add({
-                deleted: false,
-                station_number: this.terminal.code,
-                name: this.terminal.name,
-                street: this.terminal.street,
-                city: this.terminal.city,
-                province: this.terminal.province,
-                country: this.terminal.country
-            })
+            if(this.terminal.code!=null && this.terminal.name!=null && this.terminal.street!=null
+                && this.terminal.city!=null && this.terminal.province!=null && this.terminal.country!=null){
+                db.collection('terminals').add({
+                    deleted: false,
+                    station_number: this.terminal.code,
+                    name: this.terminal.name,
+                    street: this.terminal.street,
+                    city: this.terminal.city,
+                    province: this.terminal.province,
+                    country: this.terminal.country
+                })
+            }
         }
     }
 }

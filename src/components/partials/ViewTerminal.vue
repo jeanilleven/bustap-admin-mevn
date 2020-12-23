@@ -92,7 +92,7 @@
                     </div>
                     <div class="modal-footer">
                         <a href="#!" class="modal-close waves-effect waves-green btn-flat cyan-text text-accent-4">Close</a>
-                        <button type="submit" v-on:click="updateTerminal" class="modal-close waves-effect waves-cyan btn cyan accent-4">Update</button>
+                        <button type="submit" v-on:click="updateTerminal" class="waves-effect waves-cyan btn cyan accent-4">Update</button>
                     </div>
                 </form>
             </div>
@@ -101,7 +101,7 @@
 </template>
 
 <script>
-// import db from '../firebase/firebaseInit'
+import db from '../firebase/firebaseInit'
 import M from 'materialize-css'
 
 
@@ -113,26 +113,27 @@ export default {
     methods: {
         updateTerminal:function(){
             var terminalCode = document.getElementById('new_terminal_code-'+this.terminal.uid).value;
-            // var terminalName = document.getElementById('new_terminal_name-'+this.terminal.uid).value;
-            // var streetName = document.getElementById('new_street-'+this.terminal.uid).value;
-            // var city = document.getElementById('new_city-'+this.terminal.uid).value;
-            // var province = document.getElementById('new_province-'+this.terminal.uid).value;
-            // var country = document.getElementById('new_country-'+this.terminal.uid).value;
-            console.log(terminalCode);
-            // db.collection('terminals').doc(this.terminal.uid).update({
-            //     'station_number': terminalCode,
-            //     'name': terminalName,
-            //     'street': streetName,
-            //     'city': city,
-            //     'province': province,
-            //     'country': country,
-            // }).then(()=>{
-            //         // console.log(busCode, plateNumber, type);
-            //         location.reload();
-            //     }
-            // );
+            var terminalName = document.getElementById('new_terminal_name-'+this.terminal.uid).value;
+            var streetName = document.getElementById('new_street-'+this.terminal.uid).value;
+            var city = document.getElementById('new_city-'+this.terminal.uid).value;
+            var province = document.getElementById('new_province-'+this.terminal.uid).value;
+            var country = document.getElementById('new_country-'+this.terminal.uid).value;
+            if(terminalCode!="" && terminalName!="" && streetName!=""){
+                db.collection('terminals').doc(this.terminal.uid).update({
+                    'station_number': terminalCode,
+                    'name': terminalName,
+                    'street': streetName,
+                    'city': city,
+                    'province': province,
+                    'country': country,
+                }).then(()=>{
+                        console.log(terminalCode, terminalName);
+                        location.reload();
+                    }
+                );
+            }
         }
-    }
+    },
 }
 </script>
 <style lang="scss">
