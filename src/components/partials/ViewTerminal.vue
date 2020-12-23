@@ -92,7 +92,7 @@
                     </div>
                     <div class="modal-footer">
                         <a href="#!" class="modal-close waves-effect waves-green btn-flat cyan-text text-accent-4">Close</a>
-                        <button type="submit" v-on:click="updateTerminal" class="waves-effect waves-cyan btn cyan accent-4">Update</button>
+                        <button type="submit" v-on:click="updateTerminal" v-bind:class="{'modal-close':toggleModalClose}" class="waves-effect waves-cyan btn cyan accent-4">Update</button>
                     </div>
                 </form>
             </div>
@@ -107,6 +107,11 @@ import M from 'materialize-css'
 
 export default {
     props: ['terminal'],
+    data(){
+        return{
+            toggleModalClose: false,
+        }
+    },
     created(){
         M.updateTextFields()
     },
@@ -131,6 +136,7 @@ export default {
                         location.reload();
                     }
                 );
+                this.toggleModalClose = true;
             }
         }
     },
