@@ -20,6 +20,13 @@
                             <label for="email">Email</label>
                         </div>
                     </div>
+                    <div class="input-field col s12">
+                        <select v-model="operator.type">
+                            <option value="Bus">Bus</option>
+                            <option value="Jeepney">Jeepney</option>
+                        </select>
+                        <label>Operator Type</label>
+                    </div>
                 </form>
             </div>
         </div>

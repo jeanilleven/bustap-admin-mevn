@@ -5,10 +5,9 @@
             <div class="background">
                 <!-- <img src="assets/office.jpg"> -->
             </div>
-            <a href="#name"><span class="name">John Doe</span></a>
-            <a href="#email"><span class="email">jdandturk@gmail.com</span></a>
+            <h4 class="cyan-text">BusTap</h4>
             </div></li>
-            <li>    
+            <!-- <li>    
                 <router-link to="/" class="withIcon">
                     <span class="icon"><ViewDashboard :size="19"/></span> 
                     <span class="padd">Dashboard</span> 
@@ -19,7 +18,7 @@
                     <span class="icon"><Poll :size="19"/></span> 
                     <span class="padd">Statistics</span> 
                 </router-link>
-            </li>
+            </li> -->
             <li>    
                 <router-link to="/operators" class="withIcon">
                     <span class="icon"><AccountGroupOutline :size="19"/></span> 
@@ -52,6 +51,13 @@
     
 </template>
 
+<script>
+export default {
+ props: ['user'],
+}
+
+</script>
+
 
 <style lang="scss">
 .sidenav {
@@ -64,6 +70,9 @@
     .padd{
         padding-left: 15px;
         font-size: 24;
+    }
+    h4{
+        margin-bottom: 2em
     }
 }
 </style>
