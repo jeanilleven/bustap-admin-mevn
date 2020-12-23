@@ -21,7 +21,7 @@
                         </div>
                     </div>
                     <div class="input-field col s12">
-                        <select class = "input-city" v-model="terminal.city" size = "5" required>
+                        <select class="input-city" v-model="terminal.city" size="5" required>
                             <option value="Alcantara">Alcantara</option>
                             <option value="Alcoy">Alcoy</option>
                             <option value="Alegria">Alegria</option>

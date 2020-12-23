@@ -43,7 +43,6 @@ export default {
                 'deleted': true
             }).then(()=>{
                     location.reload();
-                    // router.push('/vehicles');
                 }
             );
         }

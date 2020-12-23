@@ -6,34 +6,34 @@
                 <form class="col s12" @submit.prevent>
                     <div class="row">
                         <div class="input-field col s6">
-                            <input id="first_name" type="text" class="validate" v-model="employee.fname">
+                            <input :id="'first_name-'+employee.uid" type="text" class="validate" :value="employee.fname">
                             <label for="first_name">First Name</label>
                         </div>
                         <div class="input-field col s6">
-                            <input id="last_name" type="text" class="validate" v-model="employee.lname">
+                            <input :id="'last_name-'+employee.uid" type="text" class="validate" :value="employee.lname">
                             <label for="last_name">Last Name</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            <input id="license" type="text" class="validate" v-model="employee.license" required>
+                            <input :id="'license-'+employee.uid" type="text" class="validate" :value="employee.license" required>
                             <label for="license">License Number</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            <input id="email" type="email" class="validate" v-model="employee.email" required>
+                            <input :id="'email-'+employee.uid" type="email" class="validate" :value="employee.email" required>
                             <label for="email">Email</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            <input id="phone" type="text" class="validate" v-model="employee.phone_num" required>
+                            <input :id="'phone-'+employee.uid" type="text" class="validate" :value="employee.phone_num" required>
                             <label for="phone">Phone Number</label>
                         </div>
                     </div>
                     <div class="input-field col s12">
-                        <select v-model="employee.type" required>
+                        <select :value="employee.type" required :id="'type-'+employee.uid">
                             <option value="Bus Driver">Bus Driver</option>
                             <option value="Jeepney Driver">Jeepney Driver</option>
                             <option value="Conductor">Conductor</option>
@@ -61,15 +61,30 @@ export default {
     },
     methods: {
         updateEmployee:function(){
-          console.log(this.employee.lname)
+          var fname = document.getElementById('first_name-'+this.employee.uid).value
+          var lname = document.getElementById('last_name-'+this.employee.uid).value
+          var email = document.getElementById('email-'+this.employee.uid).value
+          var phone_num = document.getElementById('phone-'+this.employee.uid).value
+          var license = document.getElementById('license-'+this.employee.uid).value
+          var type = document.getElementById('type-'+this.employee.uid).value
+
+          console.log(fname)
+          console.log(lname)
+          console.log(email)
+          console.log(phone_num)
+          console.log(license)
+          console.log(type)
           db.collection('employees').doc(this.employee.uid).update({
-            'fname': this.employee.fname, 
-            'lname': this.employee.lname,
-            'license_number': this.employee.license,
-            'email': this.employee.email, 
-            'phone_number': this.employee.phone_num, 
-            'type': this.employee.type.toString()
-          });
+            'fname': fname, 
+            'lname': lname,
+            'license_number': license,
+            'email': email, 
+            'phone_number': phone_num, 
+            'type': type
+          }).then(()=>{
+              location.reload();
+            }
+          )
         }
     },
 }

@@ -1,6 +1,5 @@
 <template>
     <div class="container operator-container" style="margin-top:3em;">
-    
         <div class="col s12">
             <ul class="tabs">
                 <li class="tab col s3"><a href="#bus" class="black-text">Bus Drivers</a></li>
