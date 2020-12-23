@@ -55,7 +55,6 @@ export default {
         login(){
             firebase.auth().signInWithEmailAndPassword(this.email, this.password)
             .then(() =>{
-                alert(`You are now logged in`)
                 this.$router.push('/operators')
                 location.reload();
             },
