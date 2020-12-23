@@ -1,11 +1,13 @@
 <template>
     <div class="container operator-container" style="margin-top:3em;">
+
+        <h3 id="page-header">Operators</h3>
         <div class="row">
             <div class="col s12">
                 <ul class="tabs">
-                    <li class="tab col s3"><a href="#bus" class="black-text">Bus</a></li>
-                    <li class="tab col s3"><a href="#jeep"  class="black-text" >Jeep</a></li>
-                    <li class="col s1 right"><a href="#add-operator" class="black-cyan modal-trigger">add</a></li>
+                    <li class="tab col s3"><a href="#bus" class="">Bus</a></li>
+                    <li class="tab col s3"><a href="#jeep"  class="" >Jeep</a></li>
+                    <li class="col s1 right"><a href="#add-operator" class="cyan-text modal-trigger">add</a></li>
                 </ul>
             </div>
             <div id="bus" class="tab-content col s12" >
@@ -209,7 +211,12 @@ export default {
 <style lang="scss">
     .tabs{
         .indicator{
-            background-color: cyan;
+            color: cyan;
         }
     }
+
+    #page-header{
+        margin-bottom: 1em;
+    }
+    
 </style>

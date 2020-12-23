@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <!-- <Navbar v-if="checkIfSignInPage !== '/'"/> -->
-     <Navbar />
+    <Navbar/>
+     <!-- <Navbar /> -->
     <!-- <SideNav/> -->
     <router-view></router-view>
   </div>
@@ -10,6 +10,7 @@
 <script>
 import Navbar from '@/components/partials/Navbar'
 import M from 'materialize-css'
+
 // import SideNav from '@/components/partials/SideNav'
 export default {
   name: 'App',
