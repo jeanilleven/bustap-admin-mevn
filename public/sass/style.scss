@@ -1,7 +1,26 @@
-body{
-    background-color: #eeeeee;
-}
 
 .operator-container{
     margin-top: 5em;
+}
+
+$themeColor: rgb(37, 182, 226);
+.tab {
+    a{
+        font-weight: 500;
+        color: rgba($themeColor, 0.5) !important;
+        &.active {color: $themeColor !important;}
+        &:hover {color: $themeColor !important;}
+        &:focus{
+            background-color: rgba($themeColor, 0.1) !important;
+            &.active{
+                background-color: rgba($themeColor, 0.1) !important;
+            }
+            &.indicator{background-color: $themeColor !important;}
+        }
+        
+    }
+}
+
+.indicator{
+    background-color: $themeColor !important;
 }

@@ -9,8 +9,8 @@
         <div class="row">
             <div class="col s12">
                 <ul class="tabs">
-                    <li class="tab col s3"><a href="#bus" class="black-text">Bus</a></li>
-                    <li class="tab col s3"><a href="#jeep"  class="black-text" >Jeep</a></li>
+                    <li class="tab col s3"><a href="#bus" class="">Bus</a></li>
+                    <li class="tab col s3"><a href="#jeep"  class="" >Jeep</a></li>
                 </ul>
             </div>
             <div id="bus" class="tab-content col s12" >

@@ -5,6 +5,8 @@ import 'materialize-css/dist/css/materialize.min.css'
 
 Vue.config.productionTip = false
 
+require('../public/sass/style.scss')
+
 new Vue({
   el: '#app',
   router: router,
