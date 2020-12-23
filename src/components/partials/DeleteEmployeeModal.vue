@@ -29,7 +29,10 @@ export default {
         deleteEmployee:function(){
             db.collection('employees').doc(this.employee.uid).update({
                 'deleted': true,
-            });
+            }).then(()=>{
+              location.reload()
+            }
+          );
         }
     },
 }

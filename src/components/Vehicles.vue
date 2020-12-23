@@ -1,14 +1,11 @@
 <template>
-    <div class="container" id="vehiclesTable">
-        <h1>
+    <div class="container operator-container " style="margin-top:3em;" id="vehiclesTable">
+        <h3>
             Vehicles 
-            <a v-bind:href="'#'+'add-vehicle'" class="icon modal-trigger btn-flat cyan white-text">
-                <span class="icon" style="margin-left: 0px" >
-                    <!-- <Plus :size="15"/>  -->
+            <a v-bind:href="'#'+'add-vehicle'" class="s1 right waves-effect waves-cyan btn cyan accent-4 modal-trigger">
                     Add Vehicle
-                </span> 
             </a>
-        </h1>
+        </h3>
         
         <table>
             <thead>

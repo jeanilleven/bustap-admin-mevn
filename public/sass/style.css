@@ -1,8 +1,9 @@
-body {
-  background-color: #eeeeee;
-}
 
 .operator-container {
   margin-top: 5em;
+}
+
+.tabs .tab a{
+  color: rgb(89, 216, 255) !important;
 }
 /*# sourceMappingURL=style.css.map */

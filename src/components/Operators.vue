@@ -1,11 +1,16 @@
 <template>
     <div class="container operator-container" style="margin-top:3em;">
+        <h3>
+            Operators 
+            <a href="#add-operator" class="s1 right waves-effect waves-cyan btn cyan accent-4 modal-trigger">
+                    Add Operator
+            </a>
+        </h3>
         <div class="row">
             <div class="col s12">
                 <ul class="tabs">
-                    <li class="tab col s3"><a href="#bus" class="black-text">Bus</a></li>
-                    <li class="tab col s3"><a href="#jeep"  class="black-text" >Jeep</a></li>
-                    <li class="col s1 right"><a href="#add-operator" class="black-cyan modal-trigger">add</a></li>
+                    <li class="tab col s3"><a href="#bus" class="">Bus</a></li>
+                    <li class="tab col s3"><a href="#jeep"  class="" >Jeep</a></li>
                 </ul>
             </div>
             <div id="bus" class="tab-content col s12" >

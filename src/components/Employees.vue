@@ -1,11 +1,14 @@
 <template>
     <div class="container operator-container" style="margin-top:3em;">
+        <h3>
+            Employees 
+            <a href="#add-employee" class="s1 right waves-effect waves-cyan btn cyan accent-4 modal-trigger">Add Employee</a>
+        </h3>
         <div class="col s12">
             <ul class="tabs">
-                <li class="tab col s3"><a href="#bus" class="black-text">Bus Drivers</a></li>
-                <li class="tab col s3"><a href="#jeep"  class="black-text" >Jeep Drivers</a></li>
-                <li class="tab col s3"><a href="#conductor"  class="black-text" >Conductors</a></li>
-                <li class="col s1 right"><a href="#add-employee" class="waves-effect waves-cyan btn cyan accent-4 modal-trigger">add Employee</a></li>
+                <li class="tab col s3"><a href="#bus" class="">Bus Drivers</a></li>
+                <li class="tab col s3"><a href="#jeep"  class="" >Jeep Drivers</a></li>
+                <li class="tab col s3"><a href="#conductor"  class="" >Conductors</a></li>
             </ul>
         </div>
 
@@ -231,3 +234,7 @@ export default {
     }
 }
 </script>
+
+<style>
+    
+</style>
