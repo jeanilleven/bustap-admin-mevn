@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/components/Home'
+// import Home from '@/components/Home'
+import Signin from '@/components/Signinpage'
 import Operators from '@/components/Operators'
 import Vehicles from '@/components/Vehicles'
 import Employees from '@/components/Employees'
@@ -15,8 +16,8 @@ export default new Router({
     routes: [
         {
             path:'/',
-            name: 'home',
-            component: Home
+            name: 'login',
+            component: Signin //Home
         },
         {
             path:'/statistics',
