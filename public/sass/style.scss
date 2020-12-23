@@ -6,21 +6,17 @@
 $themeColor: rgb(37, 182, 226);
 .tab {
     a{
-        font-weight: 500;
         color: rgba($themeColor, 0.5) !important;
-        &.active {color: $themeColor !important;}
+        &.active {color: $themeColor !important; font-weight: 500;}
         &:hover {color: $themeColor !important;}
         &:focus{
             background-color: rgba($themeColor, 0.1) !important;
             &.active{
                 background-color: rgba($themeColor, 0.1) !important;
             }
-            &.indicator{background-color: $themeColor !important;}
-        }
-        
+        }   
     }
 }
-
 .indicator{
     background-color: $themeColor !important;
 }
