@@ -1,27 +1,27 @@
 <template>
-    <div id="add-terminal" class="modal">
+    <div id = "view-terminal" class="modal">
         <div class="modal-content">
-            <h4>Add a Terminal</h4>
+            <h4>Terminal Details</h4>
             <div class="row">
-                <form class="col s12" @submit.prevent="addTerminal">
+                <form class="col s12" @submit.prevent>
                     <div class="row">
                         <div class="input-field col s6">
-                            <input id="new_terminal_code" type="text" class="validate" v-model="terminal.station_number" required>
+                            <input :id="'new_terminal_code-'+terminal.uid" type="text" class="validate" :value="terminal.station_number" required>
                             <label for="new_terminal_code">Terminal Code</label>
                         </div>
                         <div class="input-field col s6">
-                            <input id="new_terminal_name" type="text" class="validate" v-model="terminal.name" required>
+                            <input :id="'new_terminal_name-'+terminal.uid" type="text" class="validate" :value="terminal.name" required>
                             <label for="new_terminal_name">Terminal Name</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            <input id="new_street" type="text" class="validate" v-model="terminal.street" required>
+                            <input :id="'new_street-'+terminal.uid" type="text" class="validate" :value="terminal.street" required>
                             <label for="new_street">Street Name</label>
                         </div>
                     </div>
                     <div class="input-field col s12">
-                        <select class = "input-city" v-model="terminal.city" size = "5" required>
+                        <select class = "input-city" :id="'new_city-'+terminal.uid" v-model="terminal.city" size = "5" :value="terminal.city" required>
                             <option value="Alcantara">Alcantara</option>
                             <option value="Alcoy">Alcoy</option>
                             <option value="Alegria">Alegria</option>
@@ -79,20 +79,20 @@
                         <label>Select a City/Municipality</label>
                     </div>
                     <div class="input-field col s12">
-                        <select v-model="terminal.province" required>
+                        <select v-model="terminal.province" :id="'new_province-'+terminal.uid" :value="terminal.province" required>
                             <option value="Cebu">Cebu</option>
                         </select>
                         <label>Select a Province</label>
                     </div>
                     <div class="input-field col s12">
-                        <select v-model="terminal.country" required>
+                        <select v-model="terminal.country" :id="'new_country-'+terminal.uid" :value="terminal.country" required>
                             <option value="Philippines">Philippines</option>
                         </select>
                         <label>Select a Country</label>
                     </div>
                     <div class="modal-footer">
                         <a href="#!" class="modal-close waves-effect waves-green btn-flat cyan-text text-accent-4">Close</a>
-                        <button type="submit"  class="modal-close waves-effect waves-cyan btn cyan accent-4">Add</button>
+                        <button type="submit" v-on:click="updateTerminal" class="modal-close waves-effect waves-cyan btn cyan accent-4">Update</button>
                     </div>
                 </form>
             </div>
@@ -101,40 +101,43 @@
 </template>
 
 <script>
-import db from '../firebase/firebaseInit'
+// import db from '../firebase/firebaseInit'
+import M from 'materialize-css'
+
 
 export default {
-    data(){
-        return{
-            terminal:{
-                station_number: null,
-                name: null,
-                street: null,
-                city: null,
-                province: null,
-                country: null,
-            }
-        }
+    props: ['terminal'],
+    created(){
+        M.updateTextFields()
     },
-    methods:{
-        addTerminal(){
-            db.collection('terminals').add({
-                deleted: false,
-                station_number: this.terminal.code,
-                name: this.terminal.name,
-                street: this.terminal.street,
-                city: this.terminal.city,
-                province: this.terminal.province,
-                country: this.terminal.country
-            })
+    methods: {
+        updateTerminal:function(){
+            var terminalCode = document.getElementById('new_terminal_code-'+this.terminal.uid).value;
+            // var terminalName = document.getElementById('new_terminal_name-'+this.terminal.uid).value;
+            // var streetName = document.getElementById('new_street-'+this.terminal.uid).value;
+            // var city = document.getElementById('new_city-'+this.terminal.uid).value;
+            // var province = document.getElementById('new_province-'+this.terminal.uid).value;
+            // var country = document.getElementById('new_country-'+this.terminal.uid).value;
+            console.log(terminalCode);
+            // db.collection('terminals').doc(this.terminal.uid).update({
+            //     'station_number': terminalCode,
+            //     'name': terminalName,
+            //     'street': streetName,
+            //     'city': city,
+            //     'province': province,
+            //     'country': country,
+            // }).then(()=>{
+            //         // console.log(busCode, plateNumber, type);
+            //         location.reload();
+            //     }
+            // );
         }
     }
 }
 </script>
-
 <style lang="scss">
-    #add-terminal .modal-footer{
-        margin-bottom: 35%;
+    #view-terminal .modal-footer{
+        margin-bottom: 500px;
         a{
             &:nth-child(2){
                 margin-right:2em ;
@@ -142,3 +145,4 @@ export default {
         }
     }
 </style>
+
