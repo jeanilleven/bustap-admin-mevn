@@ -37,7 +37,7 @@
             </div>
         </div>
         <!-- view operator modals -->
-        <DeleteTerminalModal v-for="terminal in terminals" :key="'terminal-'+terminal.uid" :id="'delete-'+ terminal.uid" :terminal="terminal"/>
+        <DeleteTerminalModal v-for="terminal in terminals" :key="'delete-'+terminal.uid" :id="'delete-'+ terminal.uid" :terminal="terminal"/>
         <!-- view operator modals -->
         <ViewTerminal v-for="terminal in terminals" :key="'terminal-'+terminal.uid" :id="'terminal-'+ terminal.uid" :terminal="terminal"/>
         <!-- add terminal modal -->

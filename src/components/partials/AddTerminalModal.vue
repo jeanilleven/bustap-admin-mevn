@@ -92,7 +92,7 @@
                     </div>
                     <div class="modal-footer">
                         <a href="#!" class="modal-close waves-effect waves-green btn-flat cyan-text text-accent-4">Close</a>
-                        <button type="submit"  class="waves-effect waves-cyan btn cyan accent-4">Add</button>
+                        <button type="submit"  v-bind:class="{'modal-close':toggleModalClose}" class="waves-effect waves-cyan btn cyan accent-4">Add</button>
                     </div>
                 </form>
             </div>
@@ -106,6 +106,7 @@ import db from '../firebase/firebaseInit'
 export default {
     data(){
         return{
+            toggleModalClose:false,
             terminal:{
                 station_number: null,
                 name: null,
@@ -118,17 +119,20 @@ export default {
     },
     methods:{
         addTerminal(){
-            if(this.terminal.code!=null && this.terminal.name!=null && this.terminal.street!=null
+            if(this.terminal.station_number!=null && this.terminal.name!=null && this.terminal.street!=null
                 && this.terminal.city!=null && this.terminal.province!=null && this.terminal.country!=null){
                 db.collection('terminals').add({
                     deleted: false,
-                    station_number: this.terminal.code,
+                    station_number: this.terminal.station_number,
                     name: this.terminal.name,
                     street: this.terminal.street,
                     city: this.terminal.city,
                     province: this.terminal.province,
                     country: this.terminal.country
+                }).catch( error => {
+                    console.log(error)
                 })
+                this.toggleModalClose = true;
             }
         }
     }
