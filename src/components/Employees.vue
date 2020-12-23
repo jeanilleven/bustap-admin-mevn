@@ -1,11 +1,12 @@
 <template>
     <div class="container operator-container" style="margin-top:3em;">
+    
         <div class="col s12">
             <ul class="tabs">
                 <li class="tab col s3"><a href="#bus" class="black-text">Bus Drivers</a></li>
                 <li class="tab col s3"><a href="#jeep"  class="black-text" >Jeep Drivers</a></li>
                 <li class="tab col s3"><a href="#conductor"  class="black-text" >Conductors</a></li>
-                <li class="col s1 right"><a href="#add-employee" class="black-cyan modal-trigger">add</a></li>
+                <li class="col s1 right"><a href="#add-employee" class="waves-effect waves-cyan btn cyan accent-4 modal-trigger">add Employee</a></li>
             </ul>
         </div>
 
@@ -36,7 +37,7 @@
                         </a>
                     </td>
                     <td>
-                        <a href="#" class="icon">
+                        <a v-bind:href="'#delete-'+employee.uid" class="icon modal-trigger">
                             <span class="icon"><DeleteOutline :size="19"/></span> 
                         </a>
                     </td>
@@ -70,7 +71,7 @@
                         </a>
                     </td>
                     <td>
-                        <a href="#" class="icon">
+                        <a v-bind:href="'#delete-'+employee.uid" class="icon modal-trigger">
                             <span class="icon"><DeleteOutline :size="19"/></span> 
                         </a>
                     </td>
@@ -104,7 +105,7 @@
                         </a>
                     </td>
                     <td>
-                        <a href="#" class="icon">
+                        <a v-bind:href="'#delete-'+employee.uid" class="icon modal-trigger">
                             <span class="icon"><DeleteOutline :size="19"/></span> 
                         </a>
                     </td>
@@ -113,7 +114,16 @@
             </table>
         </div>
 
+        <!-- view employee modals -->
         <ViewEmployeeModal v-for="employee in busDrivers" :key="'employee-'+employee.uid" :id="'employee-'+ employee.uid" :employee="employee"/>
+        <ViewEmployeeModal v-for="employee in jeepDrivers" :key="'employee-'+employee.uid" :id="'employee-'+ employee.uid" :employee="employee"/>
+        <ViewEmployeeModal v-for="employee in conductors" :key="'employee-'+employee.uid" :id="'employee-'+ employee.uid" :employee="employee"/>
+        
+        <!-- delete modals -->
+        <DeleteEmployeeModal v-for="employee in busDrivers" :key="'delete-'+employee.uid" :id="'delete-'+ employee.uid" :employee="employee" />
+        <DeleteEmployeeModal v-for="employee in jeepDrivers" :key="'delete-'+employee.uid" :id="'delete-'+ employee.uid" :employee="employee" />
+        <DeleteEmployeeModal v-for="employee in conductors" :key="'delete-'+employee.uid" :id="'delete-'+ employee.uid" :employee="employee" />
+
         <AddEmployeeModal/>
     </div>
 </template>
@@ -123,6 +133,7 @@ import db from './firebase/firebaseInit'
 import Eye from 'vue-material-design-icons/BorderColor.vue';
 import DeleteOutline from 'vue-material-design-icons/DeleteOutline.vue'
 import AddEmployeeModal from '@/components/partials/AddEmployeeModal'
+import DeleteEmployeeModal from '@/components/partials/DeleteEmployeeModal'
 import ViewEmployeeModal from '@/components/partials/ViewEmployeeModal'
 import M from 'materialize-css'
 
@@ -132,7 +143,8 @@ export default {
         Eye,
         DeleteOutline,
         AddEmployeeModal,
-        ViewEmployeeModal
+        ViewEmployeeModal,
+        DeleteEmployeeModal
     } ,
     data(){
         return{
@@ -152,12 +164,18 @@ export default {
                 if(change.type === 'added'){
                     const data = {
                         'uid': change.doc.id,
+                        'fname': change.doc.data().fname,
+                        'lname': change.doc.data().lname,
                         'name': change.doc.data().fname + ' ' + change.doc.data().lname,
                         'license': change.doc.data().license_number,
-                        'email': change.doc.data().email
+                        'email': change.doc.data().email,
+                        'phone_num': change.doc.data().phone_number,
+                        'type': change.doc.data().type
                     }
 
-                    this.busDrivers.push(data)
+                    if(change.doc.data().deleted==false){
+                        this.busDrivers.push(data)
+                    }
                     this.employees.push(data)
                 }
             })
@@ -173,10 +191,13 @@ export default {
                         'name': change.doc.data().fname+" "+change.doc.data().lname,
                         'phone_num': change.doc.data().phone_number,
                         'license': change.doc.data().license_number,
-                        'email': change.doc.data().email
+                        'email': change.doc.data().email,
+                        'type': change.doc.data().type
                     }
-
-                    this.jeepDrivers.push(data)
+                    
+                    if(change.doc.data().deleted==false){
+                        this.jeepDrivers.push(data)
+                    }
                     this.employees.push(data)
                 }
             })
@@ -188,11 +209,17 @@ export default {
                     const data = {
                         'uid': change.doc.id,
                         'name': change.doc.data().fname + ' ' + change.doc.data().lname,
+                        'fname': change.doc.data().fname,
+                        'lname': change.doc.data().lname,
                         'license': change.doc.data().license_number,
-                        'email': change.doc.data().email
+                        'email': change.doc.data().email,
+                        'phone_num': change.doc.data().phone_number,
+                        'type': change.doc.data().type
                     }
 
-                    this.conductors.push(data)
+                    if(change.doc.data().deleted==false){
+                        this.conductors.push(data)
+                    }
                     this.employees.push(data)
                 }
             })
