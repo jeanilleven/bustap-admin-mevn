@@ -1,24 +1,11 @@
 <template>
     <div>
         <ul id="slide-out" class="sidenav">
-            <li><div class="user-view">
-            <div class="background">
-                <!-- <img src="assets/office.jpg"> -->
-            </div>
-            <h4 class="cyan-text">BusTap</h4>
-            </div></li>
-            <!-- <li>    
-                <router-link to="/" class="withIcon">
-                    <span class="icon"><ViewDashboard :size="19"/></span> 
-                    <span class="padd">Dashboard</span> 
-                </router-link>
+            <li>
+                <div class="user-view">
+                    <h4 class="cyan-text">BusTap</h4>
+                </div>
             </li>
-            <li>    
-                <router-link to="/statistics" class="withIcon">
-                    <span class="icon"><Poll :size="19"/></span> 
-                    <span class="padd">Statistics</span> 
-                </router-link>
-            </li> -->
             <li>    
                 <router-link to="/operators" class="withIcon">
                     <span class="icon"><AccountGroupOutline :size="19"/></span> 
