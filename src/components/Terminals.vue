@@ -27,7 +27,7 @@
                             </a>
                         </td>
                         <td>
-                            <a href="#" class="icon">
+                            <a v-bind:href="'#delete-'+ terminal.uid" class="icon modal-trigger">
                                 <span class="icon"><DeleteOutline :size="19"/></span> 
                             </a>
                         </td>
@@ -36,6 +36,8 @@
                 </table>
             </div>
         </div>
+        <!-- view operator modals -->
+        <DeleteTerminalModal v-for="terminal in terminals" :key="'terminal-'+terminal.uid" :id="'delete-'+ terminal.uid" :terminal="terminal"/>
         <!-- view operator modals -->
         <ViewTerminal v-for="terminal in terminals" :key="'terminal-'+terminal.uid" :id="'terminal-'+ terminal.uid" :terminal="terminal"/>
         <!-- add terminal modal -->
@@ -48,6 +50,7 @@ import db from './firebase/firebaseInit'
 import Eye from 'vue-material-design-icons/Eye.vue';
 import DeleteOutline from 'vue-material-design-icons/DeleteOutline.vue';
 import AddTerminalModal from '@/components/partials/AddTerminalModal';
+import DeleteTerminalModal from '@/components/partials/DeleteTerminalModal'
 import ViewTerminal from '@/components/partials/ViewTerminal'
 import M from 'materialize-css';
 
@@ -58,6 +61,7 @@ export default {
         DeleteOutline,
         AddTerminalModal,
         ViewTerminal,
+        DeleteTerminalModal
     },
     data(){
         return{

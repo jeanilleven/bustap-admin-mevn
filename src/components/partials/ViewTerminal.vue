@@ -137,8 +137,8 @@ export default {
 }
 </script>
 <style lang="scss">
-    #view-terminal .modal-footer{
-        margin-bottom: 500px;
+    form .modal-footer{
+        margin-bottom: 35%;
         a{
             &:nth-child(2){
                 margin-right:2em ;
